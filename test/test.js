@@ -2,6 +2,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const MojoParser = require('../modules/mojoParser.js');
+const RtParser = require('../modules/rtParser.js');
 
 describe('revenues', function() {
     describe('MojoParser', function() {
@@ -26,5 +27,15 @@ describe('revenues', function() {
                 {id:2, name: "Star Wars: The Last Jedi"}, {id:3, name: "Coco"}]);
             assert.equal(rows.length, 3);
         });
-    })
+    });
+
+    describe('RtParser', function() {
+        let parser = new RtParser();
+        let html = fs.readFileSync('test/rtResponse.txt');
+
+        it('has Star Wars with a 92% rating', function() {
+            let rating = parser.parse(html);
+            assert.equal(rating, 92);
+        });
+    });
 })

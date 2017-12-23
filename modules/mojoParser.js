@@ -1,5 +1,6 @@
 "use strict";
 const cheerio = require('cheerio');
+const accounting = require('accounting');
 
 class MojoParser {
     parse(html) {
@@ -10,13 +11,14 @@ class MojoParser {
 
         for (let i = 2; i < rows.length; i++) {
             let row = rows.eq(i);
-            let movie = {
-                name: row.find("td").eq(2).text(),
-                gross: currencyToInt(row.find("td").eq(4).text())
-            };
-            if (!isNaN(movie.gross)) {
-                movies.push(movie);
+            let gross = currencyToInt(row.find("td").eq(4).text());
+            if (isNaN(gross)) {
+                continue;
             }
+            movies.push({
+                name: row.find("td").eq(2).text(),
+                gross: gross
+            });
         }
         return movies;
     }
@@ -28,7 +30,14 @@ class MojoParser {
             if (movie.length == 0) {
                 continue;
             }
-            earnings.push({movieId: movie[0].id, gross: row.gross, name: movie[0].name});
+            let gross = row.gross;
+            let grossStr = accounting.formatMoney(gross, '$', 0);
+            earnings.push({
+                movieId: movie[0].id, 
+                gross: gross,
+                grossStr: grossStr, 
+                name: movie[0].name
+            });
         }
         return earnings;
     }

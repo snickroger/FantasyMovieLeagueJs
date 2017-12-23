@@ -11,11 +11,11 @@ router.get('/', async function(req, res, next) {
   try {
     let dateStr = moment().tz("America/New_York").format("YYYY-MM-DD");
     let dateStrThreshold = moment().add(5, 'days').tz("America/New_York").format("YYYY-MM-DD");
-    let season = (await models.season.findAll({limit: 1, order: [["id", "DESC"]]}))[0];
+    let season = (await models.season.findAll({ limit: 1, order: [["id", "DESC"]] }))[0];
     let moviesPromise = season.getMovies({ where: { releaseDate: { lte: dateStrThreshold } } });
     let urlsPromise = season.getUrls();
   
-    await models.earning.destroy({
+    let earningsClearPromise = models.earning.destroy({
       where: {
         createdAt: sequelize.where(sequelize.fn("date", sequelize.col("createdAt")), dateStr)
       }
@@ -35,8 +35,9 @@ router.get('/', async function(req, res, next) {
       earnings = earnings.concat(earningsToAdd);
     }
 
+    await earningsClearPromise;
     let earningsPromise = models.earning.bulkCreate(earnings);
-    let earningsStr = earnings.map(e => `${e.name}: ${e.gross}`).join("\n");
+    let earningsStr = earnings.map(e => `${e.name}: ${e.grossStr}`).join("\n");
 
     let rtMovies = movies.map(m => { return { id: m.id, url: m.rottenTomatoesUrl, name: m.name } });
     let ratingsPromises = [];
@@ -49,7 +50,7 @@ router.get('/', async function(req, res, next) {
         { rating: rating }, 
         { where: { id: rm.id } }
       ));
-      ratingsStr += `${rm.name}: ${rating}\n`;
+      ratingsStr += `${rm.name}: ${rating}%\n`;
     }
 
     await earningsPromise;
