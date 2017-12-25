@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     });
 
   Player.associate = models => {
-    Player.belongsTo(models.season, { onDelete: "CASCADE", foreignKey: { allowNull: false } });
-    Player.belongsToMany(models.team, { through: 'player_team' });
+    Player.belongsToMany(models.team, { through: models.player_team });
     Player.belongsTo(models.movie, { as: 'bonus1', foreignKey: 'bonus1Id' });
     Player.belongsTo(models.movie, { as: 'bonus2', foreignKey: 'bonus2Id' });
+    Player.hasMany(models.share);
   }
 
   return Player;
