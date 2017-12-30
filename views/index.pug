@@ -1,5 +1,14 @@
 extends layout
 
 block content
-  each player in players
-    li= player
+  table
+    thead
+      th Rank
+      th Name
+      th Total
+    tbody
+      each player in players
+        tr
+          td= player.rank
+          td= player.name
+          td= player.totalDisp

@@ -7,13 +7,11 @@ router.get('/', async function(req, res, next) {
   try {
     let season = (await models.season.findAll({ limit: 1, order: [["id", "DESC"]] }))[0];
     let teams = await season.getTeams();
-    let movies = await season.getMovies({ include: [models.earning, models.share] });
-    let players = await teams[1].getPlayers({order: ["name"] });
+    let standings = teams[1].getStandings();
 
-    let total = players[0].getTotal(movies);
+    let earnings = await teams[1].getStandings();
 
-    let playersMap = players.map(p => p.name);
-    res.render('index', { players: playersMap });
+    res.render('index', {players: earnings});
   } catch (e) {
     next(e);
   }

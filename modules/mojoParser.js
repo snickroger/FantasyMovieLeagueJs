@@ -26,18 +26,20 @@ class MojoParser {
     getEarnings(rows, movies) {
         let earnings = [];
         for (let row of rows) {
-            let movie = movies.filter(m => m.name == row.name);
-            if (movie.length == 0) {
+            let matchingMovies = movies.filter(m => m.name == row.name);
+            if (matchingMovies.length == 0) {
                 continue;
             }
             let gross = row.gross;
             let grossStr = accounting.formatMoney(gross, '$', 0);
-            earnings.push({
-                movieId: movie[0].id, 
-                gross: gross,
-                grossStr: grossStr, 
-                name: movie[0].name
-            });
+            for (let movie of matchingMovies) {
+                earnings.push({
+                    movieId: movie.id, 
+                    gross: gross,
+                    grossStr: grossStr, 
+                    name: movie.name
+                });
+            }
         }
         return earnings;
     }
