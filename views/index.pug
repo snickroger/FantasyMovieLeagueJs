@@ -9,6 +9,11 @@ block content
     tbody
       each player in players
         tr
-          td= player.rank
-          td= player.name
-          td= player.totalDisp
+          td: span= player.rank
+          td 
+            span= player.name
+              if (player.bonus1)
+                sup 1
+              if (player.bonus2)
+                sup 2
+          td: span= player.totalDisp
