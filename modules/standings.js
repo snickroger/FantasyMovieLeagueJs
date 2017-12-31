@@ -36,9 +36,11 @@ class Standings {
             let bonus2 = false;
             for (let movie of moviesArr) {
               let playerShares = Enumerable.from(movie.shares).firstOrDefault(p => p.playerId == player.id);
-              if (!playerShares || !movieEarnings.get(movie.id)) 
-                continue;
-              total += (playerShares.num_shares / totalShares.get(movie.id)) * movieEarnings.get(movie.id);
+              let movieEarned = movieEarnings.get(movie.id);
+              let shareTotal = totalShares.get(movie.id);
+              if (playerShares && movieEarned > 0 && shareTotal > 0) {
+                total += (playerShares.num_shares / shareTotal) * movieEarned;
+              }
       
               if (bestMovies.includes(movie.id) && player.bonus1Id === movie.id) {
                 bonus1 = true;
@@ -49,6 +51,9 @@ class Standings {
                 total += season.bonusAmount;
               }
             }
+
+            total = Math.round(total);
+            
             standings.push({
               name: player.name,
               id: player.id,
