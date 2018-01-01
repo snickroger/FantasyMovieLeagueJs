@@ -1,5 +1,6 @@
 "use strict";
 const Standings = require('../modules/standings.js');
+const Earnings = require('../modules/earnings.js');
 
 module.exports = (sequelize, DataTypes) => {
   var Team = sequelize.define("team", {
@@ -24,6 +25,17 @@ module.exports = (sequelize, DataTypes) => {
     let [season, players] = await Promise.all([seasonP, playersP]);
 
     return Standings.getSortedStandings(season, players);
+  }
+
+  Team.prototype.getEarnings = async function() {
+    let seasonP = this.getSeason({ include: [{
+      model: sequelize.models.movie, 
+      include: [sequelize.models.earning, sequelize.models.share] 
+    }]});
+    let playersP = this.getPlayers();
+    let [season, players] = await Promise.all([seasonP, playersP]);
+    
+    return Earnings.getEarnings(season.movies, players);
   }
 
   return Team;

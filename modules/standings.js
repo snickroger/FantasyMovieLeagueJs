@@ -18,6 +18,15 @@ class Standings {
               .gross;
             return limit ? (limit/100)*maxEarning : maxEarning;
           };
+          let formatShortCurrency = value => {   
+            if (value >= 1e9)
+                return (value/1e9).toPrecision(3) + "b";
+            if (value >= 1e6)
+                return (value/1e6).toPrecision(3) + "m";
+            if (value >= 1e3)
+                return (value/1e3).toPrecision(3) + "k";
+            return "";
+          };
           let movies = Enumerable.from(season.movies);
           let moviesArr = movies.toArray();
           let playerIds = Enumerable.from(players).select(p => p.id).toArray();
@@ -34,14 +43,16 @@ class Standings {
             let rank = 1;
             let bonus1 = false;
             let bonus2 = false;
+            let sharesUsed = 0;
             for (let movie of moviesArr) {
               let playerShares = Enumerable.from(movie.shares).firstOrDefault(p => p.playerId == player.id);
               let movieEarned = movieEarnings.get(movie.id);
               let shareTotal = totalShares.get(movie.id);
               if (playerShares && movieEarned > 0 && shareTotal > 0) {
                 total += (playerShares.num_shares / shareTotal) * movieEarned;
+                sharesUsed += playerShares.num_shares;
               }
-      
+
               if (bestMovies.includes(movie.id) && player.bonus1Id === movie.id) {
                 bonus1 = true;
                 total += season.bonusAmount;
@@ -53,14 +64,17 @@ class Standings {
             }
 
             total = Math.round(total);
-            
+
             standings.push({
               name: player.name,
               id: player.id,
               bonus1: bonus1,
               bonus2: bonus2,
+              sharesUsed: sharesUsed,
               total: total,
-              totalDisp: accounting.formatMoney(total, '$', 0)
+              totalDisp: accounting.formatMoney(total, '$', 0),
+              perShare: total/sharesUsed,
+              perShareDisp: formatShortCurrency(total/sharesUsed)
             });
           }
       

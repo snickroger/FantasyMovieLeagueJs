@@ -5,9 +5,11 @@ block content
     thead
       th Rank
       th Name
+      th % Used
+      th $/Share
       th Total
     tbody
-      each player in players
+      each player in standings
         tr
           td: span= player.rank
           td 
@@ -16,4 +18,6 @@ block content
                 sup 1
               if (player.bonus2)
                 sup 2
+          td: span= player.sharesUsed
+          td: span= player.perShareDisp
           td: span= player.totalDisp

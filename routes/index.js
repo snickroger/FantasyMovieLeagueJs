@@ -5,13 +5,11 @@ const sequelize = require('sequelize');
 
 router.get('/', async function(req, res, next) {
   try {
-    let season = (await models.season.findAll({ limit: 1, order: [["id", "DESC"]] }))[0];
-    let teams = await season.getTeams();
-    let standings = teams[1].getStandings();
+    let season = (await models.season.findAll({ limit: 1, order: [["id", "DESC"]], include: [models.team] }))[0];
+    let standings = await season.teams[0].getStandings();
+    let earnings = await season.teams[0].getEarnings();
 
-    let earnings = await teams[1].getStandings();
-
-    res.render('index', {players: earnings});
+    res.render('index', { standings: standings, earnings: earnings });
   } catch (e) {
     next(e);
   }
