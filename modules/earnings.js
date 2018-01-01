@@ -11,7 +11,7 @@ class Earnings {
             .select(v => v.num_shares)
             .sum()
             };
-            let maxEarningByMovie = (earnings, limit) => { 
+        let maxEarningByMovie = (earnings, limit) => { 
             let maxEarning = earnings.length == 0 ? 0 : 
                 Enumerable.from(earnings)
                 .orderByDescending(e => e.createdAt)
@@ -37,6 +37,7 @@ class Earnings {
         let worstMovies = movies.where(m => m.rating === worstMovieRating).select(m => m.id).toArray();
 
         for (let movie of moviesArr) {
+            let shares = totalSharesByMovie(movie.shares, playerIds);
             let gross = maxEarningByMovie(movie.earnings, movie.percentLimit);
             let value = gross / totalSharesByMovie(movie.shares, playerIds) || 0;
             earnings.push({
@@ -46,6 +47,7 @@ class Earnings {
                 isBestMovie: bestMovies.includes(movie.id),
                 isWorstMovie: worstMovies.includes(movie.id),
                 imdb: movie.imdb,
+                shares: shares,
                 gross: gross,
                 grossDisp: accounting.formatMoney(gross, '$', 0),
                 grossDispShort: formatShortCurrency(gross),

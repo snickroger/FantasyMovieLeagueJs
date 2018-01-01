@@ -1,6 +1,7 @@
 extends layout
 
 block content
+ div(style={float:'left'})
   table
     thead
       th Rank
@@ -21,3 +22,10 @@ block content
           td: span= player.sharesUsed
           td: span= player.perShareDisp
           td: span= player.totalDisp
+ div(style={float:'left', width:'70%'})
+   each movie in earnings
+     div(class="movie-box" style={float:'left', width:'30%', border:'solid 1px #000', margin:'4px'})
+       p= movie.name
+       p: strong= movie.grossDisp
+       p: em= `${movie.shares} shares, $${movie.valueDispShort}/ share`
+       p= `Rating: ${movie.rating}%`
