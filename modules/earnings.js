@@ -1,6 +1,7 @@
 "use strict";
 const Enumerable = require('linq');
 const accounting = require('accounting');
+const moment = require('moment');
 
 class Earnings {
     static getEarnings(movies, players) {
@@ -42,11 +43,11 @@ class Earnings {
             let value = gross / totalSharesByMovie(movie.shares, playerIds) || 0;
             earnings.push({
                 name: movie.name,
-                releaseDate: movie.releaseDate,
+                releaseDate: moment(movie.releaseDate).format("MMM DD"),
                 rating: movie.rating,
                 isBestMovie: bestMovies.includes(movie.id),
                 isWorstMovie: worstMovies.includes(movie.id),
-                imdb: movie.imdb,
+                posterUrl: `/images/${movie.imdb.replace('http://www.imdb.com/title/','')}.jpg`,
                 shares: shares,
                 gross: gross,
                 grossDisp: accounting.formatMoney(gross, '$', 0),

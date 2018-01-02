@@ -2,9 +2,10 @@
 const request = require('request-promise-native');
 
 class UrlDownloader {
-    async download(url) {
-        let html = await request(url);
-        return html;
+    async download(url, options = {}) {
+        options.uri = options.uri || url;
+        let response = await request(options);
+        return response;
     }
 }
 

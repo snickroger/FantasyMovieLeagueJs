@@ -28,10 +28,13 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Team.prototype.getEarnings = async function() {
-    let seasonP = this.getSeason({ include: [{
-      model: sequelize.models.movie, 
-      include: [sequelize.models.earning, sequelize.models.share] 
-    }]});
+    let seasonP = this.getSeason({ 
+      include: [{
+        model: sequelize.models.movie, 
+        include: [sequelize.models.earning, sequelize.models.share] 
+      }],
+      order: [[sequelize.models.movie, 'releaseDate'], [sequelize.models.movie, 'id']]
+    });
     let playersP = this.getPlayers();
     let [season, players] = await Promise.all([seasonP, playersP]);
     
