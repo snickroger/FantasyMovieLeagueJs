@@ -1,4 +1,5 @@
 extends layout
+include mixins/movie_box.pug
 
 block content
  div(style={float:'left'})
@@ -24,12 +25,4 @@ block content
           td: span= player.totalDisp
  div(style={float:'left', width:'70%'})
    each movie in earnings
-     div(class="movie-box" style={float:'left', width:'30%', height:'160px', border:'solid 1px #000', margin:'4px'})
-       div(style={height:"160px", float:"left", "margin-right":"4px"})
-         img(src=movie.posterUrl, height="160")
-       div(style={height:"160px", float:"left"})
-         p= movie.name
-         p= `Release Date: ${movie.releaseDate}`
-         p: strong= movie.grossDisp
-         p: em= `${movie.shares} shares, $${movie.valueDispShort}/ share`
-         p= `Rating: ${movie.rating}%`
+    +movie_box(movie)

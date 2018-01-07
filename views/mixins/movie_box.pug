@@ -1,0 +1,18 @@
+mixin movie_box(movie)
+  div(class="movie-box" style={float:'left', width:'30%', height:'160px', border:'solid 1px #000', margin:'4px'})
+    div(style={height:"160px", float:"left", "margin-right":"4px"})
+      img(src=movie.posterUrl, height="160")
+    div(style={height:"160px", float:"left"})
+      p= movie.name
+      p= `Release Date: ${movie.releaseDate}`
+
+      if movie.gross > 0
+        p: strong= movie.grossDisp
+      
+      if movie.valueDispShort != ""
+        p: em= `${movie.shares} shares, $${movie.valueDispShort}/ share`
+      else
+        p: em= `${movie.shares} shares`
+      
+      if movie.rating !== null
+        p= `Rating: ${movie.rating}%`
