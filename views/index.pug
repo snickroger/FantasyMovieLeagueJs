@@ -15,11 +15,11 @@ block content
         tr
           td: span= player.rank
           td 
-            span= player.name
-              if (player.bonus1)
-                sup 1
-              if (player.bonus2)
-                sup 2
+            span: a(href=`/players/${player.id}`)= player.name
+            if (player.bonus1)
+              sup 1
+            if (player.bonus2)
+              sup 2
           td: span= player.sharesUsed
           td: span= player.perShareDisp
           td: span= player.totalDisp

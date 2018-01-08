@@ -35,6 +35,61 @@ class Earnings {
 
         return earnings;
     }
+
+    static getPlayerEarnings(moviesObj, players, selectedPlayer, bonusAmount) {
+        let earnings = [];
+        let playerId = selectedPlayer.id;
+        let playerIds = Enumerable.from(players).select(p => p.id).toArray();
+        let movies = Enumerable.from(moviesObj);
+        let totalShares = movies.toDictionary(k => k.id, v => MovieHelpers.totalSharesByMovie(v.shares, playerIds));
+        let movieEarnings = movies.toDictionary(k => k.id, v => MovieHelpers.maxEarningByMovie(v.earnings, v.percentLimit));
+        let moviesArr = movies.toArray();
+        let [bestMovies, worstMovies] = MovieHelpers.bestAndWorstMovies(movies);
+        let total = 0;
+        let bonus1 = false;
+        let bonus2 = false;
+
+        for (let movie of moviesArr) {
+            let playerEarned = 0;
+            let shares = Enumerable.from(movie.shares);
+            let playerShares = shares.firstOrDefault(s => s.movieId == movie.id && s.playerId == selectedPlayer.id);
+            let movieEarned = movieEarnings.get(movie.id);
+            let sharesTotal = totalShares.get(movie.id);
+
+            if (playerShares && sharesTotal > 0) {
+                playerEarned = (playerShares.num_shares / sharesTotal) * movieEarned
+                total += playerEarned;
+            }
+
+            if (bestMovies.includes(movie.id) && selectedPlayer.bonus1Id === movie.id) {
+                bonus1 = true;
+                total += bonusAmount;
+            }
+
+            if (worstMovies.includes(movie.id) && selectedPlayer.bonus2Id === movie.id) {
+                bonus2 = true;
+                total += bonusAmount;
+            }
+
+            earnings.push({
+                name: movie.name,
+                shares: playerShares !== null ? playerShares.num_shares : 0,
+                earned: playerEarned,
+                earnedDisp: accounting.formatMoney(playerEarned, '$', 0)
+            });
+        }
+
+        return {
+            name: selectedPlayer.name, 
+            earnings: earnings, 
+            total: total, 
+            totalDisp: accounting.formatMoney(total, '$', 0), 
+            bonus1: bonus1, 
+            bonus2: bonus2,
+            bonusAmount: bonusAmount,
+            bonusAmountDisp: accounting.formatMoney(bonusAmount, '$', 0)
+        };
+    }
 }
 
 module.exports = Earnings;
