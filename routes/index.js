@@ -5,11 +5,28 @@ const sequelize = require('sequelize');
 
 router.get('/', async function(req, res, next) {
   try {
-    let season = (await models.season.findAll({ limit: 1, order: [["id", "DESC"]], include: [models.team] }))[0];
-    let standings = await season.teams[0].getStandings();
-    let earnings = await season.teams[0].getEarnings();
+    res.send(200);
+  } catch (e) {
+    next(e);
+  }
+});
 
-    res.render('index', { standings: standings, earnings: earnings });
+router.get('/:teamId', async function(req, res, next) {
+  try {
+    let season = await models.season.getSeason(req.query.season);
+    if (!season) {
+      res.send(404);
+      return;
+    }
+    let team = season.teams.filter(t => t.slug === req.params.teamId)[0];
+    if (!team) {
+      res.send(404);
+      return;
+    }
+    let standings = await team.getStandings();
+    let earnings = await team.getEarnings();
+
+    res.render('index', { standings: standings, earnings: earnings, teamId: team.id });
   } catch (e) {
     next(e);
   }

@@ -12,11 +12,19 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     });
 
+  Season.getSeason = async function(qsSeason) {
+    if (qsSeason) {
+      return sequelize.models.season.findOne({ where: { slug: qsSeason }, include: [sequelize.models.team] });
+    } else {
+      return sequelize.models.season.findOne({ order: [["id", "DESC"]], include: [sequelize.models.team] });
+    }
+  };
+
   Season.associate = models => {
     Season.hasMany(models.movie, { onDelete: "CASCADE", foreignKey: { allowNull: false } });
     Season.hasMany(models.team);
     Season.hasMany(models.url);
-  }
+  };
 
   return Season;
 };

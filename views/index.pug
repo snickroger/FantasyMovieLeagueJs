@@ -15,14 +15,14 @@ block content
         tr
           td: span= player.rank
           td 
-            span: a(href=`/players/${player.id}`)= player.name
+            span: a(href=`/players/${player.id}?team=${teamId}`)= player.name
             if (player.bonus1)
               sup 1
             if (player.bonus2)
               sup 2
           td: span= player.sharesUsed
           td: span= player.perShareDisp
-          td: span= player.totalDisp
+          td(style={'text-align':'right'}): span= player.totalDisp
  div(style={float:'left', width:'70%'})
    each movie in earnings
     +movie_box(movie)

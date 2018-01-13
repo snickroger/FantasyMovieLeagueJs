@@ -32,9 +32,15 @@ router.get('/posters', async function(req, res, next) {
             body: "",
             json: true
         };
-        let season = (await models.season.findAll({ limit: 1, order: [["id", "DESC"]], include: [models.movie] }))[0];
+
+        let season = await models.season.getSeason(req.query.season);
+        let movies = await season.getMovies();
         let promises = [];
-        for (let movie of season.movies) {
+
+        for (let movie of movies) {
+            if (!movie.imdb) {
+                continue;
+            }
             let imdbId = movie.imdb.replace('http://www.imdb.com/title/', '');
             imdbApiUrlOptions.body = `searchTerm=${imdbId}`;
 

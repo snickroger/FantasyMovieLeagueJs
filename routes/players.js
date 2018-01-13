@@ -6,10 +6,22 @@ const sequelize = require('sequelize');
 router.get('/:id(\\d+)', async function(req, res, next) {
   try {
     let playerId = parseInt(req.params.id);
-    let playerP = models.player.findAll({ limit: 1, where: { id: playerId }});
-    let seasonP = models.season.findAll({ limit: 1, order: [["id", "DESC"]], include: [models.team] });
-    let [player, season] = await Promise.all([playerP, seasonP]);
-    let playerEarnings = await season[0].teams[0].getPlayerEarnings(player[0]);
+    let teamId = parseInt(req.query.team);
+    
+    let player = await models.player.findOne({ 
+      where: { id: playerId }, 
+      include: [{ 
+        model: models.team, 
+        where: { id: teamId } 
+      }]
+    });
+
+    if (!player || player.teams.length == 0) {
+      res.send(404);
+      return;
+    }
+
+    let playerEarnings = await player.teams[0].getPlayerEarnings(player);
 
     res.render('players', {player: playerEarnings});
   } catch (e) {

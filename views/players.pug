@@ -6,24 +6,23 @@ block content
   table: thead
     tr
       th Movie
+      th Release Date
       th # Shares
       th Earned
     each movie in player.earnings
       tr
         td= movie.name
+        td= movie.releaseDate
         td(style={'text-align':'right'})= movie.shares
         td(style={'text-align':'right'})= movie.earnedDisp
     if player.bonus1
       tr
-        td Bonus: Best Movie
-        td
+        td(colspan=3) Bonus: Best Movie
         td(style={'text-align':'right'})= player.bonusAmountDisp
     if player.bonus2
       tr
-        td Bonus: Worst Movie
-        td
+        td(colspan=3) Bonus: Worst Movie
         td(style={'text-align':'right'})= player.bonusAmountDisp
     tr
-     td: strong TOTAL
-     td
+     td(colspan=3): strong TOTAL
      td: strong= player.totalDisp

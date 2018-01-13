@@ -1,8 +1,8 @@
 mixin movie_box(movie)
-  div(class="movie-box" style={float:'left', width:'30%', height:'160px', border:'solid 1px #000', margin:'4px'})
-    div(style={height:"160px", float:"left", "margin-right":"4px"})
+  div.movie-box
+    div.poster
       img(src=movie.posterUrl, height="160")
-    div(style={height:"160px", float:"left"})
+    div.movie-data
       p= movie.name
       p= `Release Date: ${movie.releaseDate}`
 

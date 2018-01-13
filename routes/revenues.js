@@ -11,7 +11,7 @@ router.get('/', async function(req, res, next) {
   try {
     let dateStr = moment().tz("America/New_York").format("YYYY-MM-DD");
     let dateStrThreshold = moment().add(5, 'days').tz("America/New_York").format("YYYY-MM-DD");
-    let season = (await models.season.findAll({ limit: 1, order: [["id", "DESC"]] }))[0];
+    let season = await models.season.getSeason(null);
     let moviesPromise = season.getMovies({ where: { releaseDate: { lte: dateStrThreshold } } });
     let urlsPromise = season.getUrls();
   

@@ -22,7 +22,7 @@ class Earnings {
                 rating: movie.rating,
                 isBestMovie: bestMovies.includes(movie.id),
                 isWorstMovie: worstMovies.includes(movie.id),
-                posterUrl: `/images/${movie.imdb.replace('http://www.imdb.com/title/','')}.jpg`,
+                posterUrl: `/images/${(movie.imdb || '').replace('http://www.imdb.com/title/','')}.jpg`,
                 shares: shares,
                 gross: gross,
                 grossDisp: accounting.formatMoney(gross, '$', 0),
@@ -73,6 +73,7 @@ class Earnings {
 
             earnings.push({
                 name: movie.name,
+                releaseDate: moment(movie.releaseDate).format("MMM DD"),
                 shares: playerShares !== null ? playerShares.num_shares : 0,
                 earned: playerEarned,
                 earnedDisp: accounting.formatMoney(playerEarned, '$', 0)

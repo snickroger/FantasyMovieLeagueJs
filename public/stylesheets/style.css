@@ -6,3 +6,27 @@ body {
 a {
   color: #00B7FF;
 }
+
+.movie-box {
+  float: left; 
+  width:30%;
+  height:160px; 
+  border:solid 1px #000; 
+  margin:6px;
+}
+
+.movie-box .poster {
+  height:160px;
+  float:left;
+  margin-right:6px;
+}
+
+.movie-box .movie-data {
+  height:160px;
+  float:left;
+  max-width:280px;
+}
+
+.movie-box .movie-data p {
+  margin: 6px;
+}
