@@ -20,8 +20,8 @@ block content
               sup 1
             if (player.bonus2)
               sup 2
-          td: span= player.sharesUsed
-          td: span= player.perShareDisp
+          td(style={'text-align':'right'}): span= player.sharesUsed
+          td(style={'text-align':'right'}): span= player.perShareDisp
           td(style={'text-align':'right'}): span= player.totalDisp
  div(style={float:'left', width:'70%'})
    each movie in earnings

@@ -8,7 +8,9 @@ const config = require('config');
 
 router.get('/', async function(req, res, next) {
   try {
-    res.send('');
+    let season = await models.season.getSeason(req.query.season);
+    let movies = await season.getMovies();
+    res.render('new', { season: season });
   } catch (e) {
     next(e);
   }
