@@ -1,7 +1,7 @@
 Fantasy Movie League
 =========
 
-This is a Ruby on Rails app based on [Brian Brushwood] and [Justin Robert Young]'s Movie Draft, originally conceived on the [TWiT.tv] Network. While their format is run like a auction draft, this is more of a movie "stock market". And yes, I know Fantasy Movie League abbreviates to FML, I don't care.
+This is a Node app based on [Brian Brushwood] and [Justin Robert Young]'s Movie Draft, originally conceived on the [TWiT.tv] Network. While their format is run like a auction draft, this is more of a movie "stock market". And yes, I know Fantasy Movie League abbreviates to FML, I don't care.
 
 Gameplay
 --
@@ -41,7 +41,7 @@ Occasionally, movies will be delayed outside of the window of the competition. T
 If a movie is delayed before the first movie of the season, it will be replaced with another movie debuting during the season, to be selected by the game's host. All existing shares purchased for the delayed movie will be applied to its replacement. The replacement will be announced and participants should be reminded of their opportunity to submit another form if they wish.
 
 ### During Accrual Phase
-If a movie is delayed within one month of the scheduled end of the season (disregarding all other delayed movies), it will remain in the season at its new date. Otherwise, it will be replaced with another movie, as above. Once a movie makes $1 of revenue, it will not be substituted for. If there is no movie suitable for substitution, the subsituted movie will be removed. A movie currently on the roster will be randomly selected, and all shares will be applied to this movie.
+If a movie is delayed within one month of the scheduled end of the season (disregarding all other delayed movies), it will remain in the season at its new date. Otherwise, it will be replaced with another movie, as above. Once a movie makes $1 of revenue, it will not be substituted for. If there is no movie suitable for substitution, the subsituted movie will be removed. A movie currently on the roster will be randomly selected, and all shares and bonus selections will be applied to this movie.
 
 [Brian Brushwood]:http://www.twitter.com/shwood
 [Justin Robert Young]:http://www.twitter.com/justinryoung
