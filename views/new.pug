@@ -7,3 +7,27 @@ block content
     span#deadline
     | | 
     a(target='_blank', href='https://www.github.com/snickroger/FantasyMovieLeague') View Rules
+  form(action="/new", method="post")
+    div
+      label(for="whoareyou") Your Name: 
+      input#whoareyou(type="text", name="whoareyou", placeholder="First & Last Name")
+    div
+      label(for="email") Your Email:
+      input#email(type="email", name="email", placeholder="(optional)")
+    each movie in season.movies
+      div.movie(style={height:'200px', border:'solid 1px #000', margin:'6px'})
+        div(style={float:'left', height:'200px', 'border-right':'solid 1px #000'})
+          img(src=`/images/${(movie.imdb || '').replace('http://www.imdb.com/title/','')}.jpg`, alt=movie.name, height="200")
+        div(style={float:'left', height:'200px'})
+          p: strong= movie.name
+          p= movie.plot
+          p
+            strong Director
+            | : #{movie.director}
+          p
+            strong Starring
+            | : #{movie.actors}
+        div(style={float:'right', width:'120px', height:'200px', 'border-left':'solid 1px #000'})
+          label
+            | Shares:
+            input.shares(type="number", style={width:'60px'})
