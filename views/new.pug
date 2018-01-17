@@ -27,7 +27,34 @@ block content
           p
             strong Starring
             | : #{movie.actors}
-        div(style={float:'right', width:'120px', height:'200px', 'border-left':'solid 1px #000'})
-          label
-            | Shares:
-            input.shares(type="number", style={width:'60px'})
+        div(style={float:'right', 'max-width':'105px', height:'200px', 'border-left':'solid 1px #000'})
+          label(for=`movie_${movie.id}`) Shares: 
+          input.shares(type="number", style={width:'60px'}, id=`movie_${movie.id}`, name=`movie_${movie.id}`)
+    div.bonus(style={height:'200px', border:'solid 1px #000', margin:'6px'})
+      div(style={float:'left', 'min-width':'105px', height:'200px', 'border-right':'solid 1px #000'})
+      div(style={float:'left', height:'200px'})
+        p What will be the 
+          strong highest 
+          | rated movie on 
+          a(href="https://www.rottentomatoes.com" target="_blank") Rotten Tomatoes
+          | ?
+        select(name="bonus1")
+          each movie in season.movies
+            option(value=movie.id)= movie.name
+      div(style={float:'right', width:'105px', height:'200px', 'border-left':'solid 1px #000'})
+
+    div.bonus(style={height:'200px', border:'solid 1px #000', margin:'6px'})
+      div(style={float:'left', 'min-width':'105px', height:'200px', 'border-right':'solid 1px #000'})
+      div(style={float:'left', height:'200px'})
+        p What will be the 
+          strong lowest 
+          | rated movie on 
+          a(href="https://www.rottentomatoes.com" target="_blank") Rotten Tomatoes
+          | ?
+        select(name="bonus2")
+          each movie in season.movies
+            option(value=movie.id)= movie.name
+      div(style={float:'right', width:'105px', height:'200px', 'border-left':'solid 1px #000'})
+
+    div
+      input(type="submit", value="Submit")
