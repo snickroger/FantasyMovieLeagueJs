@@ -5,6 +5,8 @@ const models = require('../models');
 const sequelize = require('sequelize');
 const UrlDownloader = require('../modules/urlDownloader.js');
 const config = require('config');
+const accounting = require('accounting');
+const moment = require('moment');
 
 router.get('/', async function(req, res, next) {
   try {
@@ -12,7 +14,11 @@ router.get('/', async function(req, res, next) {
     season.movies = await season.getMovies({
         order: [['releaseDate'], ['id']]
     });
-    res.render('new', { season: season });
+    for(let movie of season.movies) {
+        movie.releaseDateShort = moment(movie.releaseDate).format("MMM DD");
+    }
+    let bonusAmount = accounting.formatMoney(season.bonusAmount, '$', 0);
+    res.render('new', { season: season, title: season.pageTitle, bonusAmount: bonusAmount });
   } catch (e) {
     next(e);
   }

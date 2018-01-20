@@ -1,0 +1,19 @@
+mixin new_movie_box(movie)
+  div.movie(style={height:'200px', border:'solid 1px #000', margin:'6px'})
+    div(style={float:'left', height:'200px', 'border-right':'solid 1px #000'})
+      img(src=`/images/${(movie.imdb || '').replace('http://www.imdb.com/title/','')}.jpg`, alt=movie.name, height="200")
+    div(style={float:'left', 'max-width':'650px', height:'200px'})
+      p: strong: a(href=movie.imdb, target='_blank')= movie.name
+      p!= movie.plot
+      p
+        strong Director
+        | : #{movie.director}
+      p
+        strong Starring
+        | : #{movie.actors}
+      p
+        strong Release Date
+        | : #{movie.releaseDateShort}
+    div(style={float:'right', 'max-width':'105px', height:'200px', 'border-left':'solid 1px #000', 'text-align':'center'})
+      label(for=`movie_${movie.id}`) Shares: 
+      input.shares(type="number", value=0, min=0, max=100, style={width:'60px'}, id=`movie_${movie.id}`, name=`movie_${movie.id}`)

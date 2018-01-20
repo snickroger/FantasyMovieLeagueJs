@@ -1,60 +1,33 @@
 extends layout
+include mixins/new_movie_box.pug
+include mixins/new_bonus_box.pug
 
 block content
   h1= season.pageTitle
   h2 
     | Deadline: 
     span#deadline
-    | | 
+    |  | 
     a(target='_blank', href='https://www.github.com/snickroger/FantasyMovieLeague') View Rules
   form(action="/new", method="post")
     div
       label(for="whoareyou") Your Name: 
-      input#whoareyou(type="text", name="whoareyou", placeholder="First & Last Name")
+      input#whoareyou(required, type="text", name="whoareyou", placeholder="First & Last Name")
     div
       label(for="email") Your Email:
-      input#email(type="email", name="email", placeholder="(optional)")
-    each movie in season.movies
-      div.movie(style={height:'200px', border:'solid 1px #000', margin:'6px'})
-        div(style={float:'left', height:'200px', 'border-right':'solid 1px #000'})
-          img(src=`/images/${(movie.imdb || '').replace('http://www.imdb.com/title/','')}.jpg`, alt=movie.name, height="200")
-        div(style={float:'left', height:'200px'})
-          p: strong= movie.name
-          p= movie.plot
-          p
-            strong Director
-            | : #{movie.director}
-          p
-            strong Starring
-            | : #{movie.actors}
-        div(style={float:'right', 'max-width':'105px', height:'200px', 'border-left':'solid 1px #000'})
-          label(for=`movie_${movie.id}`) Shares: 
-          input.shares(type="number", style={width:'60px'}, id=`movie_${movie.id}`, name=`movie_${movie.id}`)
-    div.bonus(style={height:'200px', border:'solid 1px #000', margin:'6px'})
-      div(style={float:'left', 'min-width':'105px', height:'200px', 'border-right':'solid 1px #000'})
-      div(style={float:'left', height:'200px'})
-        p What will be the 
-          strong highest 
-          | rated movie on 
-          a(href="https://www.rottentomatoes.com" target="_blank") Rotten Tomatoes
-          | ?
-        select(name="bonus1")
-          each movie in season.movies
-            option(value=movie.id)= movie.name
-      div(style={float:'right', width:'105px', height:'200px', 'border-left':'solid 1px #000'})
-
-    div.bonus(style={height:'200px', border:'solid 1px #000', margin:'6px'})
-      div(style={float:'left', 'min-width':'105px', height:'200px', 'border-right':'solid 1px #000'})
-      div(style={float:'left', height:'200px'})
-        p What will be the 
-          strong lowest 
-          | rated movie on 
-          a(href="https://www.rottentomatoes.com" target="_blank") Rotten Tomatoes
-          | ?
-        select(name="bonus2")
-          each movie in season.movies
-            option(value=movie.id)= movie.name
-      div(style={float:'right', width:'105px', height:'200px', 'border-left':'solid 1px #000'})
-
+      input#email(type="email", name="email")
+      small (optional) Enter your email address for a copy of your submissions.
+    div(style={width:'50%', float:'left'})
+      //-meter(value=100, max=100, min=0, style:{width:'100%'})
+      div#trailers!=season.newHeaderContent
+    div(style={width:'50%', float:'left'})
+      each movie in season.movies
+        +new_movie_box(movie)
+        
+      +new_bonus_box(1, bonusAmount, season.movies)
+      +new_bonus_box(2, bonusAmount, season.movies)
     div
       input(type="submit", value="Submit")
+  script=`var seasonStart = '${season.movies[0].releaseDate.setYear(2018)}';`
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/countdown/2.6.0/countdown.min.js", integrity="sha256-SECU2CXX/L0UAxX9pvFJ6cs1qiGsPEFDmVSGndEJRsE=", crossorigin="anonymous")
+  script(src='/javascripts/new.js')
