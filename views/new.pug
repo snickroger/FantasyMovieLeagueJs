@@ -18,7 +18,8 @@ block content
       input#email(type="email", name="email")
       small (optional) Enter your email address for a copy of your submissions.
     div(style={width:'50%', float:'left'})
-      //-meter(value=100, max=100, min=0, style:{width:'100%'})
+      div#remaining(style={width:'350px', height:'40px', margin:'16px 0', border:'solid 1px #000'}) 
+        span 100 remaining
       div#trailers!=season.newHeaderContent
     div(style={width:'50%', float:'left'})
       each movie in season.movies
@@ -27,7 +28,8 @@ block content
       +new_bonus_box(1, bonusAmount, season.movies)
       +new_bonus_box(2, bonusAmount, season.movies)
     div
-      input(type="submit", value="Submit")
+      input#save(type="submit", value="Submit")
   script=`var seasonStart = '${season.movies[0].releaseDate.setYear(2018)}';`
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/countdown/2.6.0/countdown.min.js", integrity="sha256-SECU2CXX/L0UAxX9pvFJ6cs1qiGsPEFDmVSGndEJRsE=", crossorigin="anonymous")
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=', crossorigin='anonymous')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.js', integrity='sha256-2HAs3lxuJSrA/bAbF2bgaV55gSuX8vVsj2pCcWYqmY4=', crossorigin='anonymous')
   script(src='/javascripts/new.js')

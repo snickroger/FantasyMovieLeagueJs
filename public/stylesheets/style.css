@@ -27,6 +27,6 @@ a {
   max-width:280px;
 }
 
-.movie-box .movie-data p {
+.movie-box .movie-data p, .new-movie-box p {
   margin: 6px;
 }

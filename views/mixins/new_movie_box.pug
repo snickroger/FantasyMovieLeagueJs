@@ -1,5 +1,5 @@
 mixin new_movie_box(movie)
-  div.movie(style={height:'200px', border:'solid 1px #000', margin:'6px'})
+  div.new-movie-box(style={height:'200px', border:'solid 1px #000', margin:'6px'})
     div(style={float:'left', height:'200px', 'border-right':'solid 1px #000'})
       img(src=`/images/${(movie.imdb || '').replace('http://www.imdb.com/title/','')}.jpg`, alt=movie.name, height="200")
     div(style={float:'left', 'max-width':'650px', height:'200px'})
