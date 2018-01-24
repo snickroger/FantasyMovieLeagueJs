@@ -21,7 +21,7 @@ router.get('/', async function(req, res, next) {
 
     let seasonStart = '';
     if (season.movies.length > 0) {
-        seasonStart = season.movies[0].releaseDate;
+        seasonStart = moment(season.movies[0].releaseDate).format('YYYY/MM/DD hh:mm:ss');
     }
 
     let bonusAmount = accounting.formatMoney(season.bonusAmount, '$', 0);

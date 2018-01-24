@@ -29,7 +29,7 @@ class MovieHelpers {
     }
 
     static bestAndWorstMovies(movies) {
-        if (!movies.any()) {
+        if (!movies.any(m => m.rating != null)) {
             return [[],[]];
         }
         let bestMovieRating = movies.where(m => m.rating != null).max(m => m.rating);
