@@ -29,6 +29,9 @@ class MovieHelpers {
     }
 
     static bestAndWorstMovies(movies) {
+        if (!movies.any()) {
+            return [[],[]];
+        }
         let bestMovieRating = movies.where(m => m.rating != null).max(m => m.rating);
         let worstMovieRating = movies.where(m => m.rating != null).min(m => m.rating);
         let bestMovies = movies.where(m => m.rating === bestMovieRating).select(m => m.id).toArray();

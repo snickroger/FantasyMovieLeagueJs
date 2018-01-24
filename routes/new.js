@@ -14,11 +14,18 @@ router.get('/', async function(req, res, next) {
     season.movies = await season.getMovies({
         order: [['releaseDate'], ['id']]
     });
+
     for(let movie of season.movies) {
         movie.releaseDateShort = moment(movie.releaseDate).format("MMM DD");
     }
+
+    let seasonStart = '';
+    if (season.movies.length > 0) {
+        seasonStart = season.movies[0].releaseDate;
+    }
+
     let bonusAmount = accounting.formatMoney(season.bonusAmount, '$', 0);
-    res.render('new', { season: season, title: season.pageTitle, bonusAmount: bonusAmount });
+    res.render('new', { season: season, title: season.pageTitle, seasonStart: seasonStart, bonusAmount: bonusAmount });
   } catch (e) {
     next(e);
   }

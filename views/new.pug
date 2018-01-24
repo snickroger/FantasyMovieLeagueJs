@@ -29,7 +29,7 @@ block content
       +new_bonus_box(2, bonusAmount, season.movies)
     div
       input#save(type="submit", value="Submit")
-  script=`var seasonStart = '${season.movies[0].releaseDate.setYear(2018)}';`
+  script=`var seasonStart = '${seasonStart}';`
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=', crossorigin='anonymous')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.js', integrity='sha256-2HAs3lxuJSrA/bAbF2bgaV55gSuX8vVsj2pCcWYqmY4=', crossorigin='anonymous')
   script(src='/javascripts/new.js')
