@@ -7,7 +7,8 @@
     "debug": "node --inspect ./bin/www",
     "test": "mocha",
     "add-season": "node ./scripts/addSeason.js",
-    "add-team": "node ./scripts/addTeam.js"
+    "add-team": "node ./scripts/addTeam.js",
+    "add-movies": "node ./scripts/addMovies.js"
   },
   "dependencies": {
     "accounting": "^0.4.1",
@@ -17,6 +18,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "js-yaml": "^3.10.0",
     "linq": "^3.0.9",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",

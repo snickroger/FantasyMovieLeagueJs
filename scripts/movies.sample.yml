@@ -1,0 +1,32 @@
+movies:
+  - name: 'Avengers: Infinity War'
+    plot: >
+      The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos
+      before his blitz of devastation and ruin puts an end to the universe.
+    actors: Robert Downey Jr., Chris Hemsworth, Chris Pratt
+    director: Anthony Russo, Joe Russo
+    releaseDate: 2018-05-04
+    imdb: http://www.imdb.com/title/tt4154756
+    rottenTomatoesUrl: https://www.rottentomatoes.com/m/avengers_infinity_war
+  
+  - name: Deadpool 2
+    plot: >
+      After surviving a near fatal knee boarding accident, a disfigured guidance counselor (Wade Wilson) struggles
+      to fulfill his dream of becoming Poughkeepsie's most celebrated French Bulldog breeder while also learning
+      to cope with an open relationship.
+    actors: Ryan Reynolds, Morena Baccarin, Josh Brolin
+    director: David Leitch
+    releaseDate: 2018-05-18
+    imdb: http://www.imdb.com/title/tt5463162
+    rottenTomatoesUrl: https://www.rottentomatoes.com/m/deadpool_2
+
+  - name: 'Solo: A Star Wars Story'
+    mappedName: 'Solo: A Star Wars Story (3D)'
+    plot: >
+      During an adventure into a dark criminal underworld, Han Solo meets his future copilot Chewbacca and encounters
+      Lando Calrissian years before joining the Rebellion.
+    actors: Emilia Clarke, Alden Ehrenreich, Woody Harrelson
+    director: Ron Howard
+    releaseDate: 2018-05-25
+    imdb: http://www.imdb.com/title/tt3778644
+    rottenTomatoesUrl: https://www.rottentomatoes.com/m/solo_a_star_wars_story
