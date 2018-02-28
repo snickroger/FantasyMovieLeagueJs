@@ -11,6 +11,10 @@ block content
     a(target='_blank', href='https://www.github.com/snickroger/FantasyMovieLeague') View Rules
   form(action="/new", method="post")
     div
+      span Selected Team: 
+      span= team.name
+      input(type="hidden", name="teamId" value=team.id)
+    div
       label(for="whoareyou") Your Name: 
       input#whoareyou(required, type="text", name="whoareyou", placeholder="First & Last Name")
     div

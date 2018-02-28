@@ -11,6 +11,17 @@ const moment = require('moment');
 router.get('/', async function(req, res, next) {
   try {
     let season = await models.season.getSeason(req.query.season);
+    let team = {};
+    if (req.query.team) {
+        let teams = season.teams.filter(t => { return t.slug === req.query.team });
+        if (teams.length === 0) {
+            res.sendStatus(404);
+            return;
+        }
+        team = teams[0];
+    } else {
+        team = season.teams[0];
+    }
     season.movies = await season.getMovies({
         order: [['releaseDate'], ['id']]
     });
@@ -25,10 +36,49 @@ router.get('/', async function(req, res, next) {
     }
 
     let bonusAmount = accounting.formatMoney(season.bonusAmount, '$', 0);
-    res.render('new', { season: season, title: season.pageTitle, seasonStart: seasonStart, bonusAmount: bonusAmount });
+    res.render('new', { season: season, title: season.pageTitle, seasonStart: seasonStart, bonusAmount: bonusAmount, team: team });
   } catch (e) {
     next(e);
   }
+});
+
+router.post('/', async function(req, res, next) {
+    try {
+        let season = await models.season.getSeason();
+        let team = season.teams.filter(t => { return t.id.toString() === req.body.teamId});
+        if (team.length === 0) {
+            res.sendStatus(404);
+            return;
+        }
+
+        let movieShares = Object.keys(req.body).filter(k => { return k.substr(0,6) === 'movie_' });
+        let bonus1 = parseInt(req.body.bonus1);
+        let bonus2 = parseInt(req.body.bonus2);
+
+        let sharesToAdd = [];
+        for(let movieShare of movieShares) {
+            let movieId = parseInt(movieShare.replace('movie_', ''));
+            let shares = parseInt(req.body[movieShare]);
+            sharesToAdd.push({
+                movieId: movieId,
+                shares: shares
+            });
+        }
+
+        let player = await team[0].createPlayer({name: req.body.whoareyou, bonus1Id: bonus1, bonus2Id: bonus2});
+        let sharePromises = sharesToAdd.map(s => { 
+            return player.createShare({
+                movieId: s.movieId,
+                num_shares: s.shares
+            }); 
+        });
+
+        await Promise.all(sharePromises);
+
+        res.redirect(`/new?team=${team[0].slug}&thanks=1`);
+    } catch(e) {
+        next(e);
+    }
 });
 
 router.get('/posters', async function(req, res, next) {
