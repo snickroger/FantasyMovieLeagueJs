@@ -1,7 +1,7 @@
 "use strict";
 const cheerio = require('cheerio');
 
-class MojoParser {
+class RtParser {
     parse(html) {
         let percentToInt = strGross => parseInt(strGross.replace(/%/g, ''));
         let $ = cheerio.load(html);
@@ -13,4 +13,4 @@ class MojoParser {
     }
 }
 
-module.exports = MojoParser;
+module.exports = RtParser;

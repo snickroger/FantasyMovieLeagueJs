@@ -7,6 +7,7 @@ const UrlDownloader = require('../modules/urlDownloader.js');
 const config = require('config');
 const accounting = require('accounting');
 const moment = require('moment');
+const EmailSender = require('../modules/emailSender.js');
 
 router.get('/', async function(req, res, next) {
   try {
@@ -52,6 +53,7 @@ router.post('/', async function(req, res, next) {
         }
 
         let movieShares = Object.keys(req.body).filter(k => { return k.substr(0,6) === 'movie_' });
+        let playerName = req.body.whoareyou;
         let bonus1 = parseInt(req.body.bonus1);
         let bonus2 = parseInt(req.body.bonus2);
 
@@ -74,6 +76,32 @@ router.post('/', async function(req, res, next) {
         });
 
         await Promise.all(sharePromises);
+        if (req.body.email) {
+            let sender = new EmailSender();
+            let movies = await season.getMovies({
+                attributes: ['name', 'id'],
+                order: [['releaseDate'], ['id']]
+            });
+            let moviesMap = {};
+            for (let m of movies) {
+                moviesMap[m.id] = m.name;
+            }
+
+            let messageBody = {
+                "bonus1": moviesMap[bonus1],
+                "bonus2": moviesMap[bonus2],
+                "playerName": playerName,
+                "seasonName": season.name
+            };
+            messageBody.movies = sharesToAdd.map(s => { 
+                return {
+                    name: moviesMap[s.movieId], 
+                    shares: s.shares
+                }
+            });
+
+            sender.sendMail(req.body.email, messageBody);
+        }
 
         res.redirect(`/new?team=${team[0].slug}&thanks=1`);
     } catch(e) {
