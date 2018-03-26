@@ -37,7 +37,7 @@ router.get('/', async function(req, res, next) {
     }
 
     let bonusAmount = accounting.formatMoney(season.bonusAmount, '$', 0);
-    res.render('new', { season: season, title: season.pageTitle, seasonStart: seasonStart, bonusAmount: bonusAmount, team: team });
+    res.render('new', { season: season, title: season.pageTitle, seasonStart: seasonStart, bonusAmount: bonusAmount, team: team, thanks: (req.query.thanks === "1") });
   } catch (e) {
     next(e);
   }

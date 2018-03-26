@@ -24,16 +24,9 @@ function updateMoneyRemaining()
         }
     }
 
-    /*$( "#progressbar .progress-label" ).text(start + " remaining");
-    if (start < 0)
-        $( "#progressbar .progress-label" ).css("color","#F00");
-    else
-        $( "#progressbar .progress-label" ).css("color","#000");
-        linear-gradient(to right, rgba(0,204,0,1) 0%,rgba(0,204,0,1) 80%,rgba(0,204,0,0) 81%)
-    */
     var pct = Math.max(0,120*(start/100));
     var cappedValue = Math.max(0, start);
-    meter.style.background = `linear-gradient(to right, hsla(${pct},100%,80%,1) 0%, hsla(${pct},100%,80%,1) ${cappedValue}%, hsla(${pct},100%,40%,0) ${cappedValue}%)`;
+    meter.style.background = `#fff linear-gradient(to right, hsla(${pct},100%,80%,1) 0%, hsla(${pct},100%,80%,1) ${cappedValue}%, hsla(${pct},100%,40%,0) ${cappedValue}%)`;
     meter.children[0].innerHTML = `${start} remaining`;
 
     if (start < 0 || error)

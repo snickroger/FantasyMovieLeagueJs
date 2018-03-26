@@ -21,10 +21,15 @@ block content
         input#email(type="email" name="email" placeholder="Email (optional)")
       div#remaining
         span 100 remaining
-      button.btn.btn-primary(type="submit") Submit
+      button#save.btn.btn-primary(type="submit") Submit
     div.main
       div.jumbotron
         div.container
+          if thanks
+            div.row.justify-content-md-center
+              div.col-sm-6.text-center
+                img(src="https://media.giphy.com/media/KJ1f5iTl4Oo7u/giphy.gif" alt="Thanks!")
+                hr
           h1.display-4= season.pageTitle
           p Enter the shares for each movie and select the bonus options you choose below, then enter your First and Last name (required) and your email (optional, only used for sending you a copy of your submissions) above.
           h2.mb-5 Deadline: 
