@@ -1,6 +1,7 @@
 .vscode/
 config/
 public/images
+scripts/movies*.yml
 
 # Logs
 logs

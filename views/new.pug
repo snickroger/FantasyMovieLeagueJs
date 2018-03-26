@@ -3,37 +3,57 @@ include mixins/new_movie_box.pug
 include mixins/new_bonus_box.pug
 
 block content
-  h1= season.pageTitle
-  h2 
-    | Deadline: 
-    span#deadline
-    |  | 
-    a(target='_blank', href='https://www.github.com/snickroger/FantasyMovieLeague') View Rules
+  link(rel="stylesheet" href="/stylesheets/new.css")
   form(action="/new", method="post")
-    div
-      span Selected Team: 
-      span= team.name
-      input(type="hidden", name="teamId" value=team.id)
-    div
-      label(for="whoareyou") Your Name: 
-      input#whoareyou(required, type="text", name="whoareyou", placeholder="First & Last Name")
-    div
-      label(for="email") Your Email:
-      input#email(type="email", name="email")
-      small (optional) Enter your email address for a copy of your submissions.
-    div(style={width:'50%', float:'left'})
-      div#remaining(style={width:'350px', height:'40px', margin:'16px 0', border:'solid 1px #000'}) 
+    nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark
+      a.navbar-brand(href="#") &#127909; Fantasy Movie League
+      div.team-type
+        span Team: 
+        span= team.name
+        input(type="hidden", name="teamId" value=team.id)
+      button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation")
+        span.navbar-toggler-icon
+      div#navbarsExample04.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+      div
+        input#whoareyou(required type="text" name="whoareyou" placeholder="First & Last Name")
+      div
+        input#email(type="email" name="email" placeholder="Email (optional)")
+      div#remaining
         span 100 remaining
-      div#trailers!=season.newHeaderContent
-    div(style={width:'50%', float:'left'})
-      each movie in season.movies
-        +new_movie_box(movie)
-        
-      +new_bonus_box(1, bonusAmount, season.movies)
-      +new_bonus_box(2, bonusAmount, season.movies)
-    div
-      input#save(type="submit", value="Submit")
+      button.btn.btn-primary(type="submit") Submit
+    div.main
+      div.jumbotron
+        div.container
+          h1.display-4= season.pageTitle
+          p Enter the shares for each movie and select the bonus options you choose below, then enter your First and Last name (required) and your email (optional, only used for sending you a copy of your submissions) above.
+          h2.mb-5 Deadline: 
+            span#deadline 
+            span &nbsp;|&nbsp;
+            a(target="_blank" href="https://www.github.com/snickroger/FantasyMovieLeague") View Rules
+          div.row.justify-content-md-center
+            div.col-sm-6
+              h3.text-center Trailer Playlist
+              div.embed-responsive.embed-responsive-16by9
+      div.container
+        div.row
+          each movie in season.movies
+            +new_movie_box(movie)
+          +new_bonus_box(1, bonusAmount, season.movies)
+          +new_bonus_box(2, bonusAmount, season.movies)
+      footer.text-muted
+        div.container
+          p.float_right
+            a(href="#") Back to top
+          p © &#127909; Fantasy Movie League | Game by 
+            a(target="_blank" href="http://nickroge.rs") Nick Rogers
+            | , Design by Tyson Kemp
+          p
+            a(target="_blank" href="https://www.github.com/snickroger/FantasyMovieLeague") View Rules
+
   script=`var seasonStart = '${seasonStart}';`
-  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=', crossorigin='anonymous')
+  script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous")
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous")
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.js', integrity='sha256-2HAs3lxuJSrA/bAbF2bgaV55gSuX8vVsj2pCcWYqmY4=', crossorigin='anonymous')
   script(src='/javascripts/new.js')

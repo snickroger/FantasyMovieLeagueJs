@@ -100,7 +100,7 @@ router.post('/', async function(req, res, next) {
                 }
             });
 
-            sender.sendMail(req.body.email, messageBody);
+            sender.sendMail(req.body.email, messageBody, config.email);
         }
 
         res.redirect(`/new?team=${team[0].slug}&thanks=1`);

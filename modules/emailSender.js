@@ -1,8 +1,29 @@
 "use strict";
+const mailgun = require('mailgun-js');
 
 class EmailSender {
-  sendMail(email, emailData) {
+  async sendMail(email, emailData, emailConfig) {
+    let envelope = this.getEmail(email, emailData);
+    let mg = mailgun({apiKey: emailConfig.mailgunApiKey, domain: emailConfig.mailgunDomain});
+
+    try {
+      await mg.messages().send(envelope);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  getEmail(email, emailData) {
     let messageBody = this.getText(emailData);
+    let recipient = `${emailData.playerName} <${email}>`;
+    
+    return {
+      from: 'Fantasy Movie League <movie@nickroge.rs>',
+      to: `${recipient}`,
+      bcc: 'movie@nickroge.rs',
+      subject: `Your Fantasy Movie League Submissions: ${emailData.seasonName}`,
+      text: messageBody
+    };
   }
 
   getText(emailData) {
