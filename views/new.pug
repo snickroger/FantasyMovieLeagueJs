@@ -34,7 +34,7 @@ block content
           div.row.justify-content-md-center
             div.col-sm-6
               h3.text-center Trailer Playlist
-              div.embed-responsive.embed-responsive-16by9
+              div#trailers.embed-responsive.embed-responsive-16by9!= season.newHeaderContent
       div.container
         div.row
           each movie in season.movies
