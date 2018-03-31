@@ -16,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     Team.belongsToMany(models.player, { through: models.player_team });
   }
 
-  Team.prototype.getStandings = async function() {
-    let seasonP = this.getSeason({ 
+  Team.prototype.getStandings = async function () {
+    let seasonP = this.getSeason({
       include: [{
-        model: sequelize.models.movie, 
-        include: [sequelize.models.earning, sequelize.models.share] 
+        model: sequelize.models.movie,
+        include: [sequelize.models.earning, sequelize.models.share]
       }]
     });
     let playersP = this.getPlayers();
@@ -29,29 +29,29 @@ module.exports = (sequelize, DataTypes) => {
     return Standings.getSortedStandings(season, players);
   }
 
-  Team.prototype.getEarnings = async function() {
-    let seasonP = this.getSeason({ 
+  Team.prototype.getEarnings = async function () {
+    let seasonP = this.getSeason({
       include: [{
-        model: sequelize.models.movie, 
-        include: [sequelize.models.earning, sequelize.models.share] 
+        model: sequelize.models.movie,
+        include: [sequelize.models.earning, sequelize.models.share]
       }],
       order: [[sequelize.models.movie, 'releaseDate'], [sequelize.models.movie, 'id']]
     });
     let playersP = this.getPlayers();
     let [season, players] = await Promise.all([seasonP, playersP]);
-    
+
     return Earnings.getEarnings(season.movies, players);
   }
 
-  Team.prototype.getPlayerEarnings = async function(selectedPlayer) {
-    let seasonP = this.getSeason({ 
+  Team.prototype.getPlayerEarnings = async function (selectedPlayer) {
+    let seasonP = this.getSeason({
       include: [{
-        model: sequelize.models.movie, 
-        include: [sequelize.models.earning, sequelize.models.share] 
+        model: sequelize.models.movie,
+        include: [sequelize.models.earning, sequelize.models.share]
       }],
       order: [[sequelize.models.movie, 'releaseDate'], [sequelize.models.movie, 'id']]
     });
-    let playersP = this.getPlayers({include: [sequelize.models.share]});
+    let playersP = this.getPlayers({ include: [sequelize.models.share] });
     let [season, players] = await Promise.all([seasonP, playersP]);
 
     return Earnings.getPlayerEarnings(season.movies, players, selectedPlayer, season.bonusAmount);

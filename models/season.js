@@ -12,12 +12,19 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     });
 
-  Season.getSeason = async function(qsSeason) {
+  Season.getSeason = async function (qsSeason) {
+    var t;
     if (qsSeason) {
-      return sequelize.models.season.findOne({ where: { slug: qsSeason }, include: [sequelize.models.team] });
+      t = sequelize.models.season.findOne({ where: { slug: qsSeason }, include: [sequelize.models.team] });
     } else {
-      return sequelize.models.season.findOne({ order: [["id", "DESC"]], include: [sequelize.models.team] });
+      t = sequelize.models.season.findOne({ order: [["id", "DESC"]], include: [sequelize.models.team] });
     }
+    return await t;
+  };
+
+  Season.prototype.getStartDate = async function () {
+    let movies = await this.getMovies({ order: ['releaseDate'], limit: 1 });
+    return movies[0].releaseDate;
   };
 
   Season.associate = models => {
