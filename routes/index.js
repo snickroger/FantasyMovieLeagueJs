@@ -33,7 +33,7 @@ router.get('/:teamId', async function (req, res, next) {
     let standings = await team.getStandings();
     let earnings = await team.getEarnings();
 
-    res.render('index', { standings: standings, earnings: earnings, teamId: team.id });
+    res.render('index', { standings: standings, earnings: earnings, team: team });
   } catch (e) {
     next(e);
   }

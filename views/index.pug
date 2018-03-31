@@ -1,28 +1,38 @@
 extends layout
 include mixins/movie_box.pug
 
+block styles
+  link(rel="stylesheet" href="/stylesheets/style.css")
+
 block content
- div(style={float:'left'})
-  table
-    thead
-      th Rank
-      th Name
-      th % Used
-      th $/Share
-      th Total
-    tbody
-      each player in standings
-        tr
-          td: span= player.rank
-          td 
-            span: a(href=`/players/${player.id}?team=${teamId}`)= player.name
-            if (player.bonus1)
-              sup 1
-            if (player.bonus2)
-              sup 2
-          td(style={'text-align':'right'}): span= player.sharesUsed
-          td(style={'text-align':'right'}): span= player.perShareDisp
-          td(style={'text-align':'right'}): span= player.totalDisp
- div(style={float:'left', width:'70%'})
-   each movie in earnings
-    +movie_box(movie)
+  nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark
+    a.navbar-brand(href="#") &#127909; Fantasy Movie League
+    div.team-type
+      span Team: 
+      span= team.name 
+      | &nbsp;&#9660;
+  div.main: div.row
+    div.col-sm-3: div.container: div.row
+      table
+        thead
+          th Rank
+          th Name
+          th % Used
+          th $/Share
+          th Total
+        tbody
+          each player in standings
+            tr
+              td: span= player.rank
+              td 
+                span: a(href=`/players/${player.id}?team=${team.id}`)= player.name
+                if (player.bonus1)
+                  sup 1
+                if (player.bonus2)
+                  sup 2
+              td(style={'text-align':'right'}): span= player.sharesUsed
+              td(style={'text-align':'right'}): span= player.perShareDisp
+              td(style={'text-align':'right'}): span= player.totalDisp
+    div.col-sm-9: div.container: div.row
+      each movie in earnings
+        +movie_box(movie)

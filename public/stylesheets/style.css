@@ -1,0 +1,23 @@
+.team-type {
+  color:#efefef;
+}
+.card {
+  flex-direction: row;
+  height: 100%;
+}
+.card-img-top {
+  width: auto;
+  height: 300px;
+}
+.card-body_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.card-description {
+  flex-grow: 1;
+}
+.card-body_wrapper hr {
+  width: 100%;
+}
