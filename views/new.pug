@@ -2,8 +2,10 @@ extends layout
 include mixins/new_movie_box.pug
 include mixins/new_bonus_box.pug
 
-block content
+block styles
   link(rel="stylesheet" href="/stylesheets/new.css")
+
+block content
   form(action="/new", method="post")
     nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark
       a.navbar-brand(href="#") &#127909; Fantasy Movie League
@@ -46,19 +48,7 @@ block content
             +new_movie_box(movie)
           +new_bonus_box(1, bonusAmount, season.movies)
           +new_bonus_box(2, bonusAmount, season.movies)
-      footer.text-muted
-        div.container
-          p.float_right
-            a(href="#") Back to top
-          p © &#127909; Fantasy Movie League | Game by 
-            a(target="_blank" href="http://nickroge.rs") Nick Rogers
-            | , Design by Tyson Kemp
-          p
-            a(target="_blank" href="https://www.github.com/snickroger/FantasyMovieLeagueJs") View Rules
-
+block scripts
   script=`var seasonStart = '${seasonStart}';`
-  script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous')
-  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous")
-  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous")
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.js', integrity='sha256-2HAs3lxuJSrA/bAbF2bgaV55gSuX8vVsj2pCcWYqmY4=', crossorigin='anonymous')
   script(src='/javascripts/new.js')
