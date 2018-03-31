@@ -8,7 +8,8 @@
     "test": "mocha",
     "add-season": "node ./scripts/addSeason.js",
     "add-team": "node ./scripts/addTeam.js",
-    "add-movies": "node ./scripts/addMovies.js"
+    "add-movies": "node ./scripts/addMovies.js",
+    "remove-player": "node ./scripts/removePlayer.js"
   },
   "dependencies": {
     "accounting": "^0.4.1",
