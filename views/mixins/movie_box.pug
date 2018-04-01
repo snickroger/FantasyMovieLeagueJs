@@ -1,3 +1,6 @@
+include worst_movie_icon.pug
+include best_movie_icon.pug
+
 mixin movie_box(movie)
   div.col-lg-4.my-3
     div.card
@@ -17,3 +20,7 @@ mixin movie_box(movie)
           
           if movie.rating !== null
             p= `Rating: ${movie.rating}%`
+              if movie.isBestMovie
+                +best_movie_icon()
+              if movie.isWorstMovie
+                +worst_movie_icon()

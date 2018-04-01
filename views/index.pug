@@ -1,5 +1,7 @@
 extends layout
 include mixins/movie_box.pug
+include mixins/worst_movie_icon.pug
+include mixins/best_movie_icon.pug
 
 block styles
   link(rel="stylesheet" href="/stylesheets/style.css")
@@ -27,9 +29,9 @@ block content
               td 
                 span: a(href=`/players/${player.id}?team=${team.id}`)= player.name
                 if (player.bonus1)
-                  sup 1
+                  +best_movie_icon()
                 if (player.bonus2)
-                  sup 2
+                  +worst_movie_icon()
               td(style={'text-align':'right'}): span= player.sharesUsed
               td(style={'text-align':'right'}): span= player.perShareDisp
               td(style={'text-align':'right'}): span= player.totalDisp
