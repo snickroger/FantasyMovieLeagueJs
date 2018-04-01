@@ -9,13 +9,13 @@ class MovieHelpers {
             .sum();
     }
 
-    static maxEarningByMovie(earnings, limit) {
+    static maxEarningByMovie(earnings) {
         let maxEarning = earnings.length == 0 ? 0 : 
             Enumerable.from(earnings)
             .orderByDescending(e => e.createdAt)
             .first()
             .gross;
-        return limit ? (limit/100)*maxEarning : maxEarning
+        return maxEarning;
     }
 
     static formatShortCurrency(value) {

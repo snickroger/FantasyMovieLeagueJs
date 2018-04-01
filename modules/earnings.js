@@ -14,7 +14,7 @@ class Earnings {
 
         for (let movie of moviesArr) {
             let shares = MovieHelpers.totalSharesByMovie(movie.shares, playerIds);
-            let gross = MovieHelpers.maxEarningByMovie(movie.earnings, movie.percentLimit);
+            let gross = MovieHelpers.maxEarningByMovie(movie.earnings);
             let value = gross / shares || 0;
             earnings.push({
                 name: movie.name,
@@ -42,7 +42,7 @@ class Earnings {
         let playerIds = Enumerable.from(players).select(p => p.id).toArray();
         let movies = Enumerable.from(moviesObj);
         let totalShares = movies.toDictionary(k => k.id, v => MovieHelpers.totalSharesByMovie(v.shares, playerIds));
-        let movieEarnings = movies.toDictionary(k => k.id, v => MovieHelpers.maxEarningByMovie(v.earnings, v.percentLimit));
+        let movieEarnings = movies.toDictionary(k => k.id, v => MovieHelpers.maxEarningByMovie(v.earnings));
         let moviesArr = movies.toArray();
         let [bestMovies, worstMovies] = MovieHelpers.bestAndWorstMovies(movies);
         let total = 0;

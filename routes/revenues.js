@@ -30,7 +30,7 @@ router.get('/', async function(req, res, next) {
     for(let url of urls) {
       let html = await downloader.download(url.url);
       let rows = mojoParser.parse(html);
-      let moviesMap = movies.map(m => { return { id: m.id, name: m.mappedName || m.name } });
+      let moviesMap = movies.map(m => { return { id: m.id, name: m.mappedName || m.name, limit: m.percentLimit } });
       let earningsToAdd = mojoParser.getEarnings(rows, moviesMap);
       earnings = earnings.concat(earningsToAdd);
     }

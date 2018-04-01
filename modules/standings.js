@@ -9,7 +9,7 @@ class Standings {
       let moviesArr = movies.toArray();
       let playerIds = Enumerable.from(players).select(p => p.id).toArray();
       let totalShares = movies.toDictionary(k => k.id, v => MovieHelpers.totalSharesByMovie(v.shares, playerIds));
-      let movieEarnings = movies.toDictionary(k => k.id, v => MovieHelpers.maxEarningByMovie(v.earnings, v.percentLimit));
+      let movieEarnings = movies.toDictionary(k => k.id, v => MovieHelpers.maxEarningByMovie(v.earnings));
       let [bestMovies, worstMovies] = MovieHelpers.bestAndWorstMovies(movies);
       let standings = [];
   
