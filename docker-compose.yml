@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    depends_on:
+     - db
+    build: '.'
+    ports:
+     - "3000:3000"
+    command: >
+      npm start
+  db:
+    image: postgres:9.5.12
+    volumes:
+      - /home/nrogers/mounts/db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: movie
+      POSTGRES_PASSWORD: J8Vvs85tJ6exKw88
+      POSTGRES_DB: movie
