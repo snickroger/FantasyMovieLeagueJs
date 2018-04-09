@@ -76,7 +76,9 @@ class Earnings {
                 releaseDate: moment(movie.releaseDate).format("MMM DD"),
                 shares: playerShares !== null ? playerShares.num_shares : 0,
                 earned: playerEarned,
-                earnedDisp: accounting.formatMoney(playerEarned, '$', 0)
+                earnedDisp: accounting.formatMoney(playerEarned, '$', 0),
+                bonus1Selected: selectedPlayer.bonus1Id === movie.id,
+                bonus2Selected: selectedPlayer.bonus2Id === movie.id
             });
         }
 
