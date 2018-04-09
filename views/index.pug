@@ -9,10 +9,11 @@ block styles
 block content
   nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-dark
     a.navbar-brand(href="#") &#127909; Fantasy Movie League
-    div.team-type
-      span Team: 
-      span= team.name 
-      | &nbsp;&#9660;
+    div.team-type.form-inline
+      label Team: &nbsp;
+        select.form-control#selected-team(onchange=`changeTeam(event, '${selectedSeason.slug}');`)
+          each team in teams
+            option(value= team.id selected= team.id === selectedTeam.slug)= team.name
   div.main: div.row
     div.col-sm-3: div.container: div.row
       table
@@ -27,7 +28,7 @@ block content
             tr
               td: span= player.rank
               td 
-                span: a(href=`/players/${player.id}?team=${team.id}`)= player.name
+                span: a(href=`/players/${player.id}?team=${selectedTeam.id}`)= player.name
                 if (player.bonus1)
                   +best_movie_icon()
                 if (player.bonus2)
@@ -38,3 +39,5 @@ block content
     div.col-sm-9: div.container: div.row
       each movie in earnings
         +movie_box(movie)
+block scripts
+  script(src='/javascripts/index.js')
