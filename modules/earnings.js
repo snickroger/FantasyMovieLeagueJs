@@ -18,6 +18,7 @@ class Earnings {
             let value = gross / shares || 0;
             earnings.push({
                 name: movie.name,
+                releaseDateInt: moment(movie.releaseDate).format('X'),
                 releaseDate: moment(movie.releaseDate).format("MMM DD"),
                 rating: movie.rating,
                 isBestMovie: bestMovies.includes(movie.id),

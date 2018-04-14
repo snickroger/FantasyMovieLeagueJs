@@ -34,7 +34,7 @@ router.get('/:teamId', async function (req, res, next) {
     let earnings = await team.getEarnings();
     let teams = season.teams.map(t => { return { id: t.slug, name: t.name }});
 
-    res.render('index', { standings: standings, earnings: earnings, teams: teams, selectedTeam: team, selectedSeason: season });
+    res.render('index', { title: season.pageTitle, standings: standings, earnings: earnings, teams: teams, selectedTeam: team, selectedSeason: season });
   } catch (e) {
     next(e);
   }

@@ -36,8 +36,20 @@ block content
               td(style={'text-align':'right'}): span= player.sharesUsed
               td(style={'text-align':'right'}): span= player.perShareDisp
               td(style={'text-align':'right'}): span= player.totalDisp
-    div.col-sm-9: div.container: div.row
-      each movie in earnings
-        +movie_box(movie)
+    div.col-sm-9: div.container 
+      div.row
+        div.dropdown
+          button#sort.btn.btn-secondary.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Sort
+          div.dropdown-menu
+            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.releaseDate)") Release Date
+            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.title)") Title
+            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.shares)") Shares
+            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.gross)") Gross
+            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.rating)") Rating
+            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.value)") Value
+      div.row#movies
+        each movie in earnings
+          +movie_box(movie)
 block scripts
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js" integrity="sha256-5pgZzUdW0Qg53WkB5zljVnjT+jcQZY0dLUfoQZFxACo=" crossorigin="anonymous")
   script(src='/javascripts/index.js')
