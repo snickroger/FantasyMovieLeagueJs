@@ -23,7 +23,7 @@ class EmailSender {
       bcc: 'movie@nickroge.rs',
       subject: `Your Fantasy Movie League Submissions: ${emailData.seasonName}`,
       text: messageBody,
-      "h:sender": recipient
+      "h:sender": 'Fantasy Movie League <movie@nickroge.rs>'
     };
   }
 

@@ -71,13 +71,20 @@ router.post('/', async function (req, res, next) {
     let bonus2 = parseInt(req.body.bonus2);
 
     let sharesToAdd = [];
+    let sharesSum = 0;
     for (let movieShare of movieShares) {
       let movieId = parseInt(movieShare.replace('movie_', ''));
       let shares = parseInt(req.body[movieShare]);
+      sharesSum += shares;
       sharesToAdd.push({
         movieId: movieId,
         shares: shares
       });
+    }
+
+    if (sharesSum > 100) {
+      res.sendStatus(400);
+      return;
     }
 
     let player = await team[0].createPlayer({ name: req.body.whoareyou, bonus1Id: bonus1, bonus2Id: bonus2 });
