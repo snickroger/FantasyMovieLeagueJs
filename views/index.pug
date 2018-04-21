@@ -14,10 +14,16 @@ block content
         select.form-control#selected-team(onchange=`changeTeam(event, '${selectedSeason.slug}');`)
           each team in teams
             option(value= team.id selected= team.id === selectedTeam.slug)= team.name
+    div.season-selector.form-inline
+      label Season: &nbsp;
+        select.form-control#selected-season(onchange="changeSeason(event)")
+          each season in seasons
+            option(value=season.slug selected= selectedSeason.slug === season.slug)= season.name
+      
   div.main: div.row
-    div.col-sm-3: div.container: div.row
-      table
-        thead
+    div.col-sm-4: div.container: div.row
+      table.table.table-striped.table-hover
+        thead.table-dark
           th Rank
           th Name
           th % Used
@@ -36,7 +42,7 @@ block content
               td(style={'text-align':'right'}): span= player.sharesUsed
               td(style={'text-align':'right'}): span= player.perShareDisp
               td(style={'text-align':'right'}): span= player.totalDisp
-    div.col-sm-9: div.container 
+    div.col-sm-8: div.container 
       div.row
         div.dropdown
           button#sort.btn.btn-secondary.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Sort

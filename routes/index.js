@@ -13,6 +13,7 @@ router.get('/', async function (req, res, next) {
 
 router.get('/:teamId', async function (req, res, next) {
   try {
+    let seasons = await models.season.findAll({'order': [['id', 'DESC']], 'attributes': ['name','slug']});
     let season = await models.season.getSeason(req.query.season);
     if (!season) {
       res.send(404);
@@ -34,7 +35,7 @@ router.get('/:teamId', async function (req, res, next) {
     let earnings = await team.getEarnings();
     let teams = season.teams.map(t => { return { id: t.slug, name: t.name }});
 
-    res.render('index', { title: season.pageTitle, standings: standings, earnings: earnings, teams: teams, selectedTeam: team, selectedSeason: season });
+    res.render('index', { title: season.pageTitle, standings: standings, earnings: earnings, teams: teams, selectedTeam: team, seasons: seasons, selectedSeason: season });
   } catch (e) {
     next(e);
   }

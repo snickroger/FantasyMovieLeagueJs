@@ -1,5 +1,8 @@
-.team-type {
+.team-type, .season-selector {
   color:#efefef;
+}
+.season-selector {
+  padding-left:8px;
 }
 .best-movie-icon {
   color: #080;

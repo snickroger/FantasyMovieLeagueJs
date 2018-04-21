@@ -1,3 +1,8 @@
+function changeSeason(e) {
+  var seasonSlug = jQuery(e.target).val();
+  window.location = '/?season='+seasonSlug;
+}
+
 function changeTeam(e, seasonSlug) {
   var team = jQuery(e.target).val();
   window.location = '/'+team+'?season='+seasonSlug;
