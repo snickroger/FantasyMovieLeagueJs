@@ -5,7 +5,9 @@ function changeSeason(e) {
 
 function changeTeam(e, seasonSlug) {
   var team = jQuery(e.target).val();
-  window.location = '/'+team+'?season='+seasonSlug;
+  if (team) {
+    window.location = '/'+team+'?season='+seasonSlug;
+  }
 }
 
 var SORT = {
