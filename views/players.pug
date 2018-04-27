@@ -3,33 +3,39 @@ include mixins/worst_movie_icon.pug
 include mixins/best_movie_icon.pug
 
 block content
-  h1= player.name
-
-  table: thead
-    tr
-      th Movie
-      th Release Date
-      th # Shares
-      th Earned
-    each movie in player.earnings
-      tr
-        td
-          span= movie.name
-          if movie.bonus1Selected
-            +best_movie_icon()
-          if movie.bonus2Selected
-            +worst_movie_icon()
-        td= movie.releaseDate
-        td(style={'text-align':'right'})= movie.shares
-        td(style={'text-align':'right'})= movie.earnedDisp
-    if player.bonus1
-      tr
-        td(colspan=3) Bonus: Best Movie
-        td(style={'text-align':'right'})= player.bonusAmountDisp
-    if player.bonus2
-      tr
-        td(colspan=3) Bonus: Worst Movie
-        td(style={'text-align':'right'})= player.bonusAmountDisp
-    tr
-     td(colspan=3): strong TOTAL
-     td(style={'text-align':'right'}): strong= player.totalDisp
+  div.main
+    div.row
+      div.col-sm-12: div.container: div.row
+        h1= player.name
+        h5= `Team: ${team.name}`
+    div.row
+      div.col-sm-6: div.container: div.row
+        table.table.table-striped.table-hover
+          thead.table-dark
+            tr
+              th Movie
+              th Release Date
+              th # Shares
+              th Earned
+          each movie in player.earnings
+            tr
+              td
+                span= movie.name
+                if movie.bonus1Selected
+                  +best_movie_icon()
+                if movie.bonus2Selected
+                  +worst_movie_icon()
+              td= movie.releaseDate
+              td(style={'text-align':'right'})= movie.shares
+              td(style={'text-align':'right'})= movie.earnedDisp
+          if player.bonus1
+            tr
+              td(colspan=3) Bonus: Best Movie
+              td(style={'text-align':'right'})= player.bonusAmountDisp
+          if player.bonus2
+            tr
+              td(colspan=3) Bonus: Worst Movie
+              td(style={'text-align':'right'})= player.bonusAmountDisp
+          tr
+          td(colspan=3): strong TOTAL
+          td(style={'text-align':'right'}): strong= player.totalDisp
