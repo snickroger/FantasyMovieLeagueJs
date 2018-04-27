@@ -39,7 +39,7 @@ router.get('/', async function (req, res, next) {
 
     let seasonStart = '';
     if (season.movies.length > 0) {
-      seasonStart = moment(season.movies[0].releaseDate).format('YYYY/MM/DD hh:mm:ss');
+      seasonStart = moment(season.movies[0].releaseDate).format('x');
     }
 
     let bonusAmount = accounting.formatMoney(season.bonusAmount, '$', 0);
@@ -55,13 +55,13 @@ router.post('/', async function (req, res, next) {
 
     let startDate = await season.getStartDate();
     if (startDate <= new Date()) {
-      res.status(403);
+      res.status(403).send('Season has already begun.');
       return;
     }
 
     let team = season.teams.filter(t => { return t.id.toString() === req.body.teamId });
     if (team.length === 0) {
-      res.sendStatus(404);
+      res.status(404).send('Team not found.');
       return;
     }
 
