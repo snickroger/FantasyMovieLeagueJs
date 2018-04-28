@@ -31,7 +31,8 @@ class MojoParser {
         continue;
       }
       let movie = matchingMovies[0];
-      let gross = row.gross * (movie.limit / 100);
+      let limit = movie.limit || 100;
+      let gross = row.gross * (limit / 100);
       let grossStr = accounting.formatMoney(gross, '$', 0);
 
       earnings.push({
