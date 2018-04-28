@@ -57,6 +57,7 @@ router.get('/', async function(req, res, next) {
     await Promise.all(ratingsPromises);
 
     res.header("Content-Type", "text/plain");
+    res.header("Cache-Control", "no-cache");
     res.send(`${earningsStr}\n\n${ratingsStr}`);
 
   } catch(e) {
