@@ -29,7 +29,7 @@
     "pg": "^6.4.2",
     "pug": "2.0.0-beta11",
     "readline-sync": "^1.4.7",
-    "request": "^2.83.0",
+    "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
     "sequelize": "^4.28.5",
     "sequelize-cli": "^3.2.0",
