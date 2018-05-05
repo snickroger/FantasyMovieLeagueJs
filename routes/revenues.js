@@ -6,6 +6,7 @@ const UrlDownloader = require('../modules/urlDownloader.js');
 const MojoParser = require('../modules/mojoParser.js');
 const RtParser = require('../modules/rtParser.js');
 const moment = require('moment-timezone');
+const config = require('config');
 
 router.get('/', async function(req, res, next) {
   try {
@@ -55,7 +56,17 @@ router.get('/', async function(req, res, next) {
 
     await earningsPromise;
     await Promise.all(ratingsPromises);
-
+    
+    try {
+      let cacheClearPromises = [
+        downloader.download('http://localhost:3000/friends', {"headers": {"Bypass": "1"}}), 
+        downloader.download('http://localhost:3000/dealeron', {"headers": {"Bypass": "1"}})
+      ];
+      await Promise.all(cacheClearPromises);
+    } catch (e) {
+      // no-op
+    }
+    
     res.header("Content-Type", "text/plain");
     res.header("Cache-Control", "no-cache");
     res.send(`${earningsStr}\n\n${ratingsStr}`);
