@@ -30,7 +30,7 @@ router.get('/:teamId', async function (req, res, next) {
     let seasons = await models.season.findAll({'order': [['id', 'DESC']], 'attributes': ['name','slug']});
     let season = await models.season.getSeason(req.query.season);
     if (!season) {
-      res.send(404);
+      res.status(404).send('Season not found');
       return;
     }
 
@@ -41,7 +41,7 @@ router.get('/:teamId', async function (req, res, next) {
 
     let team = season.teams.filter(t => t.slug === req.params.teamId)[0];
     if (!team) {
-      res.send(404);
+      res.status(404).send('Team not found');
       return;
     }
 

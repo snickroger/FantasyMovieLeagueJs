@@ -17,6 +17,7 @@ class Earnings {
             let gross = MovieHelpers.maxEarningByMovie(movie.earnings);
             let value = gross / shares || 0;
             earnings.push({
+                id: movie.id,
                 name: movie.name,
                 releaseDateInt: moment(movie.releaseDate).format('X'),
                 releaseDate: moment(movie.releaseDate).format("MMM DD"),
@@ -92,6 +93,45 @@ class Earnings {
             bonus2: bonus2,
             bonusAmount: bonusAmount,
             bonusAmountDisp: accounting.formatMoney(bonusAmount, '$', 0)
+        };
+    }
+
+    static getMovieEarnings(moviesObj, players, selectedMovie) {
+        let earnings = [];
+        let playersArr = Enumerable.from(players).toArray();
+        let playerIds = Enumerable.from(players).select(p => p.id).toArray();
+        let movies = Enumerable.from(moviesObj);
+        let movieEarned = MovieHelpers.maxEarningByMovie(selectedMovie.earnings);
+        let movieShares = Enumerable.from(selectedMovie.shares);
+        let movieSharesTotal = MovieHelpers.totalSharesByMovie(selectedMovie.shares, playerIds);
+        let [bestMovies, worstMovies] = MovieHelpers.bestAndWorstMovies(movies);
+
+        for (let player of playersArr) {
+            let playerShares = movieShares.firstOrDefault(s => s.playerId === player.id);
+            let playerSharesNum = playerShares !== null ? playerShares.num_shares : 0;
+            let playerEarned = playerSharesNum > 0 && movieSharesTotal > 0
+              ? (playerSharesNum / movieSharesTotal) * movieEarned
+              : 0;
+
+            let bonus1 = bestMovies.includes(selectedMovie.id) && player.bonus1Id === selectedMovie.id;
+            let bonus2 = worstMovies.includes(selectedMovie.id) && player.bonus2Id === selectedMovie.id;
+
+            earnings.push({
+                name: player.name,
+                bonus1: bonus1,
+                bonus2: bonus2,
+                shares: playerSharesNum,
+                earned: playerEarned,
+                earnedDisp: accounting.formatMoney(playerEarned, '$', 0)
+            });
+        }
+
+        return {
+            name: selectedMovie.name, 
+            earnings: earnings, 
+            total: movieEarned, 
+            totalDisp: accounting.formatMoney(movieEarned, '$', 0),
+            totalShares: movieSharesTotal
         };
     }
 }

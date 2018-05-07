@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var revenues = require('./routes/revenues');
 var newRoute = require('./routes/new.js');
 var players = require('./routes/players.js');
+var movies = require('./routes/movies.js');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/revenues', revenues);
 app.use('/new', newRoute);
 app.use('/players', players);
+app.use('/movies', movies);
 app.use('/', index);
 
 // catch 404 and forward to error handler

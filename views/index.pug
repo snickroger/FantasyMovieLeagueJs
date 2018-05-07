@@ -55,7 +55,7 @@ block content
             a.dropdown-item(href="#" onclick="return sort(SORT.defaults.value)") Value
       div.row#movies
         each movie in earnings
-          +movie_box(movie)
+          +movie_box(movie, selectedTeam.id)
 block scripts
   script(src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js" integrity="sha256-5pgZzUdW0Qg53WkB5zljVnjT+jcQZY0dLUfoQZFxACo=" crossorigin="anonymous")
   script(src='/javascripts/index.js')

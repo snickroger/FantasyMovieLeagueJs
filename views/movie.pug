@@ -1,0 +1,32 @@
+extends layout
+include mixins/worst_movie_icon.pug
+include mixins/best_movie_icon.pug
+
+block content
+  div.main
+    div.row
+      div.col-sm-12: div.container: div.row
+        h1= movie.name
+        h5= `Team: ${team.name}`
+    div.row
+      div.col-sm-6: div.container: div.row
+        table.table.table-striped.table-hover
+          thead.table-dark
+            tr
+              th Player
+              th # Shares
+              th Earned
+          each player in movie.earnings
+            tr
+              td
+                span= player.name
+                if player.bonus1
+                  +best_movie_icon()
+                if movie.bonus2
+                  +worst_movie_icon()
+              td(style={'text-align':'right'})= player.shares
+              td(style={'text-align':'right'})= player.earnedDisp
+          tr
+            td: strong TOTAL
+            td(style={'text-align':'right'}): strong= movie.totalShares
+            td(style={'text-align':'right'}): strong= movie.totalDisp

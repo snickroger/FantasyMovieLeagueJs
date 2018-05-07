@@ -17,7 +17,7 @@ router.get('/:id(\\d+)', async function (req, res, next) {
     });
 
     if (!player || player.teams.length == 0) {
-      res.send(404);
+      res.status(404).send("Player not found");
       return;
     }
 
