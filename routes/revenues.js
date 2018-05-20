@@ -17,9 +17,7 @@ router.get('/', async function(req, res, next) {
     let urlsPromise = season.getUrls();
   
     let earningsClearPromise = models.earning.destroy({
-      where: {
-        createdAt: sequelize.where(sequelize.fn("date", sequelize.col("createdAt")), dateStr)
-      }
+      where: sequelize.where(sequelize.fn("date", sequelize.col("createdAt")), dateStr)
     });
 
     let downloader = new UrlDownloader();
