@@ -113,8 +113,8 @@ class Earnings {
               ? (playerSharesNum / movieSharesTotal) * movieEarned
               : 0;
 
-            let bonus1 = bestMovies.includes(selectedMovie.id) && player.bonus1Id === selectedMovie.id;
-            let bonus2 = worstMovies.includes(selectedMovie.id) && player.bonus2Id === selectedMovie.id;
+            let bonus1 = player.bonus1Id === selectedMovie.id;
+            let bonus2 = player.bonus2Id === selectedMovie.id;
 
             earnings.push({
                 name: player.name,
