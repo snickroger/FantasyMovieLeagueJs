@@ -24,7 +24,7 @@ router.get('/:id(\\d+)', async function (req, res, next) {
 
     let movieEarnings = await team.getMovieEarnings(selectedMovie);
 
-    res.render('movie', { title: `${selectedMovie.name} | Earnings`, movie: movieEarnings, team: team });
+    res.render('movie', { title: `${selectedMovie.name} | Earnings`, movie: movieEarnings.tableData, chart: movieEarnings.chartData, team: team });
   } catch (e) {
     next(e);
   }

@@ -24,7 +24,7 @@ class Earnings {
                 rating: movie.rating,
                 isBestMovie: bestMovies.includes(movie.id),
                 isWorstMovie: worstMovies.includes(movie.id),
-                posterUrl: `/images/${(movie.imdb || '').replace('http://www.imdb.com/title/','')}.jpg`,
+                posterUrl: `/images/${(movie.imdb || '').replace('http://www.imdb.com/title/', '')}.jpg`,
                 shares: shares,
                 gross: gross,
                 grossDisp: accounting.formatMoney(gross, '$', 0),
@@ -85,11 +85,11 @@ class Earnings {
         }
 
         return {
-            name: selectedPlayer.name, 
-            earnings: earnings, 
-            total: total, 
-            totalDisp: accounting.formatMoney(total, '$', 0), 
-            bonus1: bonus1, 
+            name: selectedPlayer.name,
+            earnings: earnings,
+            total: total,
+            totalDisp: accounting.formatMoney(total, '$', 0),
+            bonus1: bonus1,
             bonus2: bonus2,
             bonusAmount: bonusAmount,
             bonusAmountDisp: accounting.formatMoney(bonusAmount, '$', 0)
@@ -110,8 +110,8 @@ class Earnings {
             let playerShares = movieShares.firstOrDefault(s => s.playerId === player.id);
             let playerSharesNum = playerShares !== null ? playerShares.num_shares : 0;
             let playerEarned = playerSharesNum > 0 && movieSharesTotal > 0
-              ? (playerSharesNum / movieSharesTotal) * movieEarned
-              : 0;
+                ? (playerSharesNum / movieSharesTotal) * movieEarned
+                : 0;
 
             let bonus1 = player.bonus1Id === selectedMovie.id;
             let bonus2 = player.bonus2Id === selectedMovie.id;
@@ -127,12 +127,19 @@ class Earnings {
         }
 
         return {
-            name: selectedMovie.name, 
-            earnings: earnings, 
-            total: movieEarned, 
+            name: selectedMovie.name,
+            earnings: earnings,
+            total: movieEarned,
             totalDisp: accounting.formatMoney(movieEarned, '$', 0),
             totalShares: movieSharesTotal
         };
+    }
+
+    static getMovieEarningsChartData(selectedMovie) {
+        let earningPoints = selectedMovie.earnings.filter(e => e.createdAt.getDay() === 0)
+          .map(e => { return { t: moment(e.createdAt).format('LL'), y: e.gross }; });
+
+        return earningPoints;
     }
 }
 

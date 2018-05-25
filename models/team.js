@@ -68,7 +68,10 @@ module.exports = (sequelize, DataTypes) => {
     let playersP = this.getPlayers({ include: [sequelize.models.share], order: [['name', 'ASC']] });
     let [season, players] = await Promise.all([seasonP, playersP]);
 
-    return Earnings.getMovieEarnings(season.movies, players, selectedMovie);
+    return {
+      tableData: Earnings.getMovieEarnings(season.movies, players, selectedMovie),
+      chartData: JSON.stringify(Earnings.getMovieEarningsChartData(selectedMovie))
+    };
   }
 
   return Team;
