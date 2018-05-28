@@ -57,8 +57,10 @@ router.get('/', async function(req, res, next) {
     
     try {
       let cacheClearPromises = [
-        downloader.download('http://localhost/friends', {"headers": {"Bypass": "1"}}), 
-        downloader.download('http://localhost/dealeron', {"headers": {"Bypass": "1"}})
+        downloader.download('http://localhost/friends', {"headers": {"Bypass": "1"}}),
+        downloader.download('http://localhost/dealeron', {"headers": {"Bypass": "1"}}),
+	downloader.download(`http://localhost/friends?season=${season.slug}`, {"headers": {"Bypass": "1"}}),
+	downloader.download(`http://localhost/dealeron?season=${season.slug}`, {"headers": {"Bypass": "1"}})
       ];
       await Promise.all(cacheClearPromises);
     } catch (e) {
