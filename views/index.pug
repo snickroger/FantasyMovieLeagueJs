@@ -22,26 +22,26 @@ block content
       
   div.main: div.row
     div.col-sm-4: div.container: div.row
-      table.table.table-striped.table-hover
+      table#rankings.table.table-striped.table-hover
         thead.table-dark
-          th Rank
-          th Name
-          th % Used
-          th $/Share
-          th Total
+          th(onclick="return rankingSort(0);") Rank
+          th(onclick="return rankingSort(1);") Name
+          th(onclick="return rankingSort(2);") % Used
+          th(onclick="return rankingSort(3);") $/Share
+          th(onclick="return rankingSort(4);") Total
         tbody
           each player in standings
             tr
-              td: span= player.rank
-              td 
+              td(data-sort=player.rank): span= player.rank
+              td(data-sort=player.name) 
                 span: a(href=`/players/${player.id}?team=${selectedTeam.id}`)= player.name
                 if (player.bonus1)
                   +best_movie_icon()
                 if (player.bonus2)
                   +worst_movie_icon()
-              td(style={'text-align':'right'}): span= player.sharesUsed
-              td(style={'text-align':'right'}): span= player.perShareDisp
-              td(style={'text-align':'right'}): span= player.totalDisp
+              td(data-sort=player.sharesUsed style={'text-align':'right'}): span= player.sharesUsed
+              td(data-sort=player.perShare style={'text-align':'right'}): span= player.perShareDisp
+              td(data-sort=player.total style={'text-align':'right'}): span= player.totalDisp
     div.col-sm-8: div.container 
       div.row
         div.dropdown
