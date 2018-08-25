@@ -49,7 +49,9 @@ router.get('/:teamId', async function (req, res, next) {
     let earnings = await team.getEarnings();
     let teams = season.teams.map(t => { return { id: t.slug, name: t.name }});
 
-    res.render('index', { title: season.pageTitle, standings: standings, earnings: earnings, teams: teams, selectedTeam: team, seasons: seasons, selectedSeason: season });
+    let endDate = await season.getEndDate();
+
+    res.render('index', { title: season.pageTitle, standings: standings, earnings: earnings, teams: teams, selectedTeam: team, seasons: seasons, selectedSeason: season, endDate: endDate });
   } catch (e) {
     next(e);
   }

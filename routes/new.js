@@ -82,7 +82,7 @@ router.post('/', async function (req, res, next) {
       });
     }
 
-    if (sharesSum > 100) {
+    if (sharesSum != 100) {
       res.sendStatus(400);
       return;
     }

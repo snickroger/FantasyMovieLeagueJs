@@ -59,3 +59,10 @@ function rankingSort(index) {
 
   return false;
 }
+
+$("#end-date").countdown(endDate, function(event) {
+  if(event.offset.totalDays > 0 && event.offset.totalDays <= 28) {
+    format = '%-d day%!d ';
+    $(this).html("Season ends in " + event.strftime(format));
+  }
+});

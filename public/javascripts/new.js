@@ -29,7 +29,7 @@ function updateMoneyRemaining()
     meter.style.background = `#fff linear-gradient(to right, hsla(${pct},100%,80%,1) 0%, hsla(${pct},100%,80%,1) ${cappedValue}%, hsla(${pct},100%,40%,0) ${cappedValue}%)`;
     meter.children[0].innerHTML = `${start} remaining`;
 
-    if (start < 0 || error)
+    if (start != 0 || error)
         $("#save").attr("disabled","disabled");
     else
         $("#save").removeAttr("disabled");

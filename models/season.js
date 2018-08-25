@@ -1,4 +1,5 @@
 "use strict";
+const moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
   var Season = sequelize.define("season", {
@@ -26,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
     let movies = await this.getMovies({ order: ['releaseDate'], limit: 1 });
     return movies[0].releaseDate;
   };
+
+  Season.prototype.getEndDate = async function () {
+    let movies = await this.getMovies({ order: [['releaseDate', 'DESC']], limit: 1 });
+    let endDate = moment(movies[0].releaseDate).add(4, "weeks").format('x');
+    return endDate;
+  }
 
   Season.associate = models => {
     Season.hasMany(models.movie, { onDelete: "CASCADE", foreignKey: { allowNull: false } });

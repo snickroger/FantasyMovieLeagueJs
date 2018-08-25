@@ -44,18 +44,23 @@ block content
               td(data-sort=player.total style={'text-align':'right'}): span= player.totalDisp
     div.col-sm-8: div.container 
       div.row
-        div.dropdown
-          button#sort.btn.btn-secondary.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Sort
-          div.dropdown-menu
-            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.releaseDate)") Release Date
-            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.title)") Title
-            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.shares)") Shares
-            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.gross)") Gross
-            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.rating)") Rating
-            a.dropdown-item(href="#" onclick="return sort(SORT.defaults.value)") Value
+        div.col-sm-9
+          div.dropdown
+            button#sort.btn.btn-secondary.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Sort
+            div.dropdown-menu
+              a.dropdown-item(href="#" onclick="return sort(SORT.defaults.releaseDate)") Release Date
+              a.dropdown-item(href="#" onclick="return sort(SORT.defaults.title)") Title
+              a.dropdown-item(href="#" onclick="return sort(SORT.defaults.shares)") Shares
+              a.dropdown-item(href="#" onclick="return sort(SORT.defaults.gross)") Gross
+              a.dropdown-item(href="#" onclick="return sort(SORT.defaults.rating)") Rating
+              a.dropdown-item(href="#" onclick="return sort(SORT.defaults.value)") Value
+        div.col-sm-3
+          h5#end-date
       div.row#movies
         each movie in earnings
           +movie_box(movie, selectedTeam.id)
 block scripts
+  script=`var endDate = '${endDate}';`
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.js', integrity='sha256-2HAs3lxuJSrA/bAbF2bgaV55gSuX8vVsj2pCcWYqmY4=', crossorigin='anonymous')
   script(src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js" integrity="sha256-5pgZzUdW0Qg53WkB5zljVnjT+jcQZY0dLUfoQZFxACo=" crossorigin="anonymous")
   script(src='/javascripts/index.js')
