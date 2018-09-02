@@ -23,22 +23,17 @@ module.exports = (sequelize, DataTypes) => {
     return await t;
   };
 
-  Season.prototype.getStartDate = async function () {
-    let movies = await this.getMovies({ order: ['releaseDate'], limit: 1 });
-    return movies[0].releaseDate;
-  };
-
-  Season.prototype.getStartDate = function (movies) {
+  Season.prototype.getStartDate = async function (movies) {
+    if (!movies) {
+      movies = await this.getMovies({ order: ['releaseDate'], limit: 1 });
+    }
     return movies[0].releaseDate;
   }
 
-  Season.prototype.getEndDate = async function () {
-    let movies = await this.getMovies({ order: [['releaseDate', 'DESC']], limit: 1 });
-    let endDate = moment(movies[0].releaseDate).add(4, "weeks");
-    return new Date(endDate);
-  }
-
-  Season.prototype.getEndDate = function (movies) {
+  Season.prototype.getEndDate = async function (movies) {
+    if (!movies) {
+      movies = await this.getMovies({ order: ['releaseDate'], limit: 1 });
+    }
     let endDate = moment(movies[0].releaseDate).add(4, "weeks");
     return new Date(endDate);
   }

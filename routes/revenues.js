@@ -22,7 +22,7 @@ router.get('/', async function (req, res, next) {
     let earnings = [];
     let [movies, urls] = await Promise.all([moviesPromise, urlsPromise]);
     
-    let seasonEndDate = season.getEndDate(movies);
+    let seasonEndDate = await season.getEndDate(movies);
     let currentTime = new Date();
     if (currentTime >= seasonEndDate) {
       res.send('');
