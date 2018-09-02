@@ -8,25 +8,32 @@ const RtParser = require('../modules/rtParser.js');
 const moment = require('moment-timezone');
 const config = require('config');
 
-router.get('/', async function(req, res, next) {
+router.get('/', async function (req, res, next) {
   try {
     let dateStr = moment().tz("America/New_York").format("YYYY-MM-DD");
     let dateStrThreshold = moment().add(5, 'days').tz("America/New_York").format("YYYY-MM-DD");
     let season = await models.season.getSeason(null);
-    let moviesPromise = season.getMovies({ where: { releaseDate: { lte: dateStrThreshold } } });
+    let moviesPromise = season.getMovies({ where: { releaseDate: { lte: dateStrThreshold } }, order: ['releaseDate'] });
     let urlsPromise = season.getUrls();
-  
-    let earningsClearPromise = models.earning.destroy({
-      where: sequelize.where(sequelize.fn("date", sequelize.col("createdAt")), dateStr)
-    });
 
     let downloader = new UrlDownloader();
     let mojoParser = new MojoParser();
     let rtParser = new RtParser();
     let earnings = [];
     let [movies, urls] = await Promise.all([moviesPromise, urlsPromise]);
+    
+    let seasonEndDate = season.getEndDate(movies);
+    let currentTime = new Date();
+    if (currentTime >= seasonEndDate) {
+      res.send('');
+      return;
+    }
 
-    for(let url of urls) {
+    let earningsClearPromise = models.earning.destroy({
+      where: sequelize.where(sequelize.fn("date", sequelize.col("createdAt")), dateStr)
+    });
+
+    for (let url of urls) {
       let html = await downloader.download(url.url);
       let rows = mojoParser.parse(html);
       let moviesMap = movies.map(m => { return { id: m.id, name: m.mappedName || m.name, limit: m.percentLimit } });
@@ -42,11 +49,11 @@ router.get('/', async function(req, res, next) {
     let ratingsPromises = [];
     let ratingsStr = "";
 
-    for(let rm of rtMovies) {
+    for (let rm of rtMovies) {
       let html = await downloader.download(rm.url);
       let rating = rtParser.parse(html);
       ratingsPromises.push(models.movie.update(
-        { rating: rating }, 
+        { rating: rating },
         { where: { id: rm.id } }
       ));
       ratingsStr += `${rm.name}: ${rating}%\n`;
@@ -54,24 +61,24 @@ router.get('/', async function(req, res, next) {
 
     await earningsPromise;
     await Promise.all(ratingsPromises);
-    
+
     try {
       let cacheClearPromises = [
-        downloader.download('http://localhost/friends', {"headers": {"Bypass": "1"}}),
-        downloader.download('http://localhost/dealeron', {"headers": {"Bypass": "1"}}),
-	downloader.download(`http://localhost/friends?season=${season.slug}`, {"headers": {"Bypass": "1"}}),
-	downloader.download(`http://localhost/dealeron?season=${season.slug}`, {"headers": {"Bypass": "1"}})
+        downloader.download('http://localhost/friends', { "headers": { "Bypass": "1" } }),
+        downloader.download('http://localhost/dealeron', { "headers": { "Bypass": "1" } }),
+        downloader.download(`http://localhost/friends?season=${season.slug}`, { "headers": { "Bypass": "1" } }),
+        downloader.download(`http://localhost/dealeron?season=${season.slug}`, { "headers": { "Bypass": "1" } })
       ];
       await Promise.all(cacheClearPromises);
     } catch (e) {
       // no-op
     }
-    
+
     res.header("Content-Type", "text/plain");
     res.header("Cache-Control", "no-cache");
     res.send(`${earningsStr}\n\n${ratingsStr}`);
 
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 });

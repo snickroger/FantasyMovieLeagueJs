@@ -28,10 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     return movies[0].releaseDate;
   };
 
+  Season.prototype.getStartDate = function (movies) {
+    return movies[0].releaseDate;
+  }
+
   Season.prototype.getEndDate = async function () {
     let movies = await this.getMovies({ order: [['releaseDate', 'DESC']], limit: 1 });
-    let endDate = moment(movies[0].releaseDate).add(4, "weeks").format('x');
-    return endDate;
+    let endDate = moment(movies[0].releaseDate).add(4, "weeks");
+    return new Date(endDate);
+  }
+
+  Season.prototype.getEndDate = function (movies) {
+    let endDate = moment(movies[0].releaseDate).add(4, "weeks");
+    return new Date(endDate);
   }
 
   Season.associate = models => {
