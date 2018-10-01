@@ -37,11 +37,24 @@ block content
           h2.mb-5 Deadline: 
             span#deadline 
             span &nbsp;|&nbsp;
-            a(target="_blank" href="https://www.github.com/snickroger/FantasyMovieLeagueJs") View Rules
+            a(target="_blank" rel="noopener" href="https://www.github.com/snickroger/FantasyMovieLeagueJs") View Rules
           div.row.justify-content-md-center
             div.col-sm-6
               h3.text-center Trailer Playlist
               div#trailers.embed-responsive.embed-responsive-16by9!= season.newHeaderContent
+            if team.moneyPool
+              div.col-sm-6
+                h3.text-center Money Pool
+                div#money-pool.alert.alert-warning
+                  p 
+                    strong Join this team's money pool! 
+                    | All players on the #{team.name} team have a chance at winning the  
+                    a(href=team.moneyPool target="_blank" rel="noopener") money pool
+                    | ! The total amount in the pool will be awarded to the leading scorer on this team who contributed at least $2. Players do <strong>not</strong> have to pay anything to play the game, but a player must have contributed to the pool to win it.
+                  p
+                    a.btn.btn-primary(href=team.moneyPool target="_blank" rel="noopener") 
+                      i.fa.fa-paypal(aria-hidden="true")
+                      | &nbsp;&nbsp;Contribute
       div.container
         div.row
           each movie in season.movies

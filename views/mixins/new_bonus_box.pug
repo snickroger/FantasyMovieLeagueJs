@@ -5,10 +5,10 @@ mixin new_bonus_box(i, bonusAmount, movies)
       div.card-body
         div.card-body_wrapper
           h3= `Bonus ${i}: +${bonusAmount}`
-          p What will be the 
+          p Which movie will be the 
             strong= `${i == 1 ? 'highest' : 'lowest'} ` 
-            | rated movie on 
-            a(href="https://www.rottentomatoes.com" target="_blank" rel="noopener") Rotten Tomatoes
+            | rated on 
+            a(href="https://www.metacritic.com" target="_blank" rel="noopener") Metacritic
             | ?
           select(name=`bonus${i}`)
             each movie in movies

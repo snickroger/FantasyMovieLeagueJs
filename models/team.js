@@ -5,7 +5,8 @@ const Earnings = require('../modules/earnings.js');
 module.exports = (sequelize, DataTypes) => {
   var Team = sequelize.define("team", {
     name: { type: DataTypes.STRING, allowNull: false },
-    slug: { type: DataTypes.STRING, allowNull: false }
+    slug: { type: DataTypes.STRING, allowNull: false },
+    moneyPool: { type: DataTypes.STRING }
   },
     {
       timestamps: false

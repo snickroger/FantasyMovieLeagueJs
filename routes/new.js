@@ -156,7 +156,7 @@ router.get('/posters', async function (req, res, next) {
       if (!movie.imdb) {
         continue;
       }
-      let imdbId = movie.imdb.replace('http://www.imdb.com/title/', '');
+      let imdbId = movie.imdb.replace('https://www.imdb.com/title/', '');
       imdbApiUrlOptions.body = `searchTerm=${imdbId}`;
 
       promises.push(downloader.download(imdbApiUrl, imdbApiUrlOptions));

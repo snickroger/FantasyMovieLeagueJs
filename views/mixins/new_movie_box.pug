@@ -1,7 +1,7 @@
 mixin new_movie_box(movie)
   div.col-lg-6.my-3
     div.card
-      img.card-img-top(src=`/images/${(movie.imdb || '').replace('http://www.imdb.com/title/','')}.jpg` alt=movie.name)
+      img.card-img-top(src=`/images/${(movie.imdb || '').replace('http://www.imdb.com/title/','').replace('https://www.imdb.com/title/','')}.jpg` alt=movie.name)
       div.card-body
         div.card-body_wrapper
           h3: a(href=movie.imdb target='_blank' rel="noopener")= movie.name
