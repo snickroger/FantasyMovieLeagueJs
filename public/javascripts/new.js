@@ -1,6 +1,11 @@
 $(".shares").change(updateMoneyRemaining).keyup(updateMoneyRemaining);
 $(updateMoneyRemaining);
 
+function changeSeason(e) {
+  var seasonSlug = jQuery(e.target).val();
+  window.location = '/?season='+seasonSlug;
+}
+
 function updateMoneyRemaining()
 {
     var start = 100;

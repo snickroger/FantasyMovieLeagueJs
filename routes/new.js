@@ -11,7 +11,12 @@ const EmailSender = require('../modules/emailSender.js');
 
 router.get('/', async function (req, res, next) {
   try {
+    let seasons = await models.season.findAll({'order': [['id', 'DESC']], 'attributes': ['name','slug']});
     let season = await models.season.getSeason(req.query.season);
+    if (!season) {
+      res.send(404);
+      return;
+    }
 
     let startDate = await season.getStartDate();
     if (startDate <= new Date() && req.query.skip !== "1") {
@@ -43,7 +48,7 @@ router.get('/', async function (req, res, next) {
     }
 
     let bonusAmount = accounting.formatMoney(season.bonusAmount, '$', 0);
-    res.render('new', { season: season, title: season.pageTitle, seasonStart: seasonStart, bonusAmount: bonusAmount, team: team, thanks: (req.query.thanks === "1") });
+    res.render('new', { seasons: seasons, selectedSeason: season, title: season.pageTitle, seasonStart: seasonStart, bonusAmount: bonusAmount, team: team, thanks: (req.query.thanks === "1") });
   } catch (e) {
     next(e);
   }
