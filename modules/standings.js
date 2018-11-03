@@ -48,7 +48,8 @@ class Standings {
           total: total,
           totalDisp: accounting.formatMoney(total, '$', 0),
           perShare: total/sharesUsed || 0,
-          perShareDisp: MovieHelpers.formatShortCurrency(sharesUsed > 0 ? total/sharesUsed : 0)
+          perShareDisp: MovieHelpers.formatShortCurrency(sharesUsed > 0 ? total/sharesUsed : 0),
+          enteredMoneyPool: player.enteredMoneyPool
         });
       }
   

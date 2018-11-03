@@ -30,3 +30,9 @@
 .card-body_wrapper hr {
   width: 100%;
 }
+table#rankings {
+  font-size:85%;
+}
+table#rankings td.bonuses {
+  font-size:110%;
+}

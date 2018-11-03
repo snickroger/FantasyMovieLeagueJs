@@ -2,6 +2,7 @@ extends layout
 include mixins/movie_box.pug
 include mixins/worst_movie_icon.pug
 include mixins/best_movie_icon.pug
+include mixins/entered_money_pool.pug
 
 block styles
   link(rel="stylesheet" href="/stylesheets/style.css")
@@ -25,6 +26,7 @@ block content
       table#rankings.table.table-striped.table-hover
         thead.table-dark
           th(onclick="return rankingSort(0);") Rank
+          th
           th(onclick="return rankingSort(1);") Name
           th(onclick="return rankingSort(2);") % Used
           th(onclick="return rankingSort(3);") $/Share
@@ -33,12 +35,15 @@ block content
           each player in standings
             tr
               td(data-sort=player.rank): span= player.rank
+              td.bonuses
+                if player.enteredMoneyPool
+                  +entered_money_pool()
+                if player.bonus1
+                  +best_movie_icon()
+                if player.bonus2
+                  +worst_movie_icon()
               td(data-sort=player.name) 
                 span: a(href=`/players/${player.id}?team=${selectedTeam.id}`)= player.name
-                if (player.bonus1)
-                  +best_movie_icon()
-                if (player.bonus2)
-                  +worst_movie_icon()
               td(data-sort=player.sharesUsed style={'text-align':'right'}): span= player.sharesUsed
               td(data-sort=player.perShare style={'text-align':'right'}): span= player.perShareDisp
               td(data-sort=player.total style={'text-align':'right'}): span= player.totalDisp

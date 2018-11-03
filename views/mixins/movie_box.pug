@@ -19,7 +19,7 @@ mixin movie_box(movie, teamId)
             p: em= `${movie.shares} shares`
           
           if movie.rating !== null
-            p= `Rating: ${movie.rating}%`
+            p= `Rating: ${movie.rating}% `
               if movie.isBestMovie
                 +best_movie_icon()
               if movie.isWorstMovie
