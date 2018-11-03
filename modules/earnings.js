@@ -24,7 +24,7 @@ class Earnings {
         rating: movie.rating,
         isBestMovie: bestMovies.includes(movie.id),
         isWorstMovie: worstMovies.includes(movie.id),
-        posterUrl: `/images/${(movie.imdb || '').replace('http://www.imdb.com/title/', '')}.jpg`,
+        posterUrl: `/images/${(movie.imdb || '').replace('https://www.imdb.com/title/', '')}.jpg`,
         shares: shares,
         gross: gross,
         grossDisp: accounting.formatMoney(gross, '$', 0),

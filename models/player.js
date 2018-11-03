@@ -2,7 +2,8 @@
 
 module.exports = (sequelize, DataTypes) => {
   var Player = sequelize.define("player", {
-    name: { type: DataTypes.STRING, allowNull: false }
+    name: { type: DataTypes.STRING, allowNull: false },
+    enteredMoneyPool: { type:DataTypes.BOOLEAN, allowNull: false }
   },
     {
       timestamps: true

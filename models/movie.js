@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     rottenTomatoesUrl: { type: DataTypes.STRING },
     rating: { type: DataTypes.INTEGER },
     limited: { type: DataTypes.BOOLEAN, allowNull: false },
-    percentLimit: { type: DataTypes.INTEGER }
+    percentLimit: { type: DataTypes.INTEGER },
+    metacriticUrl: { type: DataTypes.STRING }
   },
     {
       timestamps: false
