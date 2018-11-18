@@ -4,9 +4,8 @@ const models = require('../models');
 const sequelize = require('sequelize');
 const UrlDownloader = require('../modules/urlDownloader.js');
 const MojoParser = require('../modules/mojoParser.js');
-const RtParser = require('../modules/rtParser.js');
+const MetacriticParser = require('../modules/metacriticParser.js');
 const moment = require('moment-timezone');
-const config = require('config');
 
 router.get('/', async function (req, res, next) {
   try {
@@ -18,7 +17,7 @@ router.get('/', async function (req, res, next) {
 
     let downloader = new UrlDownloader();
     let mojoParser = new MojoParser();
-    let rtParser = new RtParser();
+    let ratingParser = new MetacriticParser();
     let earnings = [];
     let [movies, urls] = await Promise.all([moviesPromise, urlsPromise]);
     
@@ -45,18 +44,22 @@ router.get('/', async function (req, res, next) {
     let earningsPromise = models.earning.bulkCreate(earnings);
     let earningsStr = earnings.map(e => `${e.name}: ${e.grossStr}`).join("\n");
 
-    let rtMovies = movies.map(m => { return { id: m.id, url: m.rottenTomatoesUrl, name: m.name } });
+    let metacriticMovies = movies.map(m => { return { id: m.id, url: m.metacriticUrl, name: m.name } });
     let ratingsPromises = [];
     let ratingsStr = "";
 
-    for (let rm of rtMovies) {
-      let html = await downloader.download(rm.url);
-      let rating = rtParser.parse(html);
+    for (let metacriticMovie of metacriticMovies) {
+      let html = await downloader.download(metacriticMovie.url);
+      let rating = ratingParser.parse(html);
+      if (rating === null) {
+        continue;
+      }
+      
       ratingsPromises.push(models.movie.update(
         { rating: rating },
-        { where: { id: rm.id } }
+        { where: { id: metacriticMovie.id } }
       ));
-      ratingsStr += `${rm.name}: ${rating}%\n`;
+      ratingsStr += `${metacriticMovie.name}: ${rating}%\n`;
     }
 
     await earningsPromise;

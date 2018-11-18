@@ -3,6 +3,7 @@ const assert = require('assert');
 const fs = require('fs');
 const MojoParser = require('../modules/mojoParser.js');
 const RtParser = require('../modules/rtParser.js');
+const MetacriticParser = require('../modules/metacriticParser.js');
 const Standings = require('../modules/standings.js');
 const MockSeasons = require('./mockSeasons.js');
 
@@ -38,6 +39,21 @@ describe('revenues', function() {
         it('has Star Wars with a 92% rating', function() {
             let rating = parser.parse(html);
             assert.equal(rating, 92);
+        });
+    });
+
+    describe('MetacriticParser', function() {
+        let parser = new MetacriticParser();
+        let html = fs.readFileSync('test/mcResponse1.txt');
+        let noRatingHtml = fs.readFileSync('test/mcResponse2.txt');
+
+        it('has Widows with a 86% rating', function() {
+            let rating = parser.parse(html);
+            assert.equal(rating, 86);
+        });
+        it('has Vice with no rating', function() {
+            let rating = parser.parse(noRatingHtml);
+            assert.equal(rating, null);
         });
     });
 
