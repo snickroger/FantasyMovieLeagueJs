@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Season.prototype.getEndDate = async function (movies) {
     if (!movies) {
-      movies = await this.getMovies({ order: ['releaseDate'], limit: 1 });
+      movies = await this.getMovies({ order: [["releaseDate", "DESC"]], limit: 1 });
     }
     let endDate = moment(movies[0].releaseDate).add(4, "weeks");
     return new Date(endDate);

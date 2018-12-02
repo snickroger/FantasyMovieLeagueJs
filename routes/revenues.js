@@ -12,7 +12,7 @@ router.get('/', async function (req, res, next) {
     let dateStr = moment().tz("America/New_York").format("YYYY-MM-DD");
     let dateStrThreshold = moment().add(5, 'days').tz("America/New_York").format("YYYY-MM-DD");
     let season = await models.season.getSeason(null);
-    let moviesPromise = season.getMovies({ where: { releaseDate: { lte: dateStrThreshold } }, order: ['releaseDate'] });
+    let moviesPromise = season.getMovies({ where: { releaseDate: { lte: dateStrThreshold } }, order: [['releaseDate', 'DESC']] });
     let urlsPromise = season.getUrls();
 
     let downloader = new UrlDownloader();
